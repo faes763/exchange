@@ -1,0 +1,231 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.text-h1 {
+  @apply text-3xl max-xl:text-2xl max-lg:text-xl max-md:text-lg;
+}
+.text-h2 {
+  @apply text-2xl max-xl:text-xl max-lg:text-lg max-md:text-base;
+}
+
+.container {
+  @apply mx-auto
+}
+
+.coin {
+  position: fixed;
+  z-index: -1;
+  width: 500px;
+  height: 500px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("/images/token.png");
+}
+.coin.coin_1 {
+  top: 40%;
+  left: -250px;
+  animation: 8s linear infinite alternate coin_1;
+}
+.coin.coin_2 {
+  top: 10%;
+  right: -250px;
+  animation: 8s linear infinite alternate coin_2;
+}
+
+@keyframes coin_1 {
+  0% {
+    transform: scale3d(1, 1, 1) translate(0px, -50px) rotate(10deg);
+  }
+  50% {
+    transform: scale3d(0.95, 0.95, 0.95);
+  }
+  100% {
+    transform: scale3d(1, 1, 1) translate(0px, 50px) rotate(10deg);
+  }
+}
+@keyframes coin_2 {
+  0% {
+    transform: scale3d(1, 1, 1) translate(0px, -100px) scale(0.8) rotate(-10deg);
+  }
+  50% {
+    transform: scale3d(0.95, 0.95, 0.9);
+  }
+  100% {
+    transform: scale3d(1, 1, 1) translate(0px, -100px) scale(0.8) rotate(-10deg);
+  }
+}
+
+@media (max-width: 768px){
+  .container {
+      max-width: 640px;
+      padding-left: 25px;
+      padding-right: 25px;
+  }
+
+}
+@media (max-width: 640px){
+  .container {
+      max-width: 548px;
+      padding-left: 15px;
+      padding-right: 15px;
+  }
+  
+}
+@media (max-width: 320px){
+  .container {
+      max-width: 100%;
+      padding-left: 5px;
+      padding-right: 5px;
+  }
+ 
+}
+
+@media (min-width: 1024px){
+  .container {
+      max-width: 968px;
+  }  
+}
+@media (min-width: 1280px){
+  .container {
+      max-width: 1268px;
+  }
+}
+@media (min-width: 1536px){
+  .container {
+      max-width: 1450px;
+  }
+}
+@media (min-width: 1656px){
+  .container {
+      max-width: 1600px;
+  }
+}
+
+
+:root {
+  --fz96: 80px;
+  --fz64: 64px;
+  --fz48: 48px;
+  --fz40: 40px;
+  --fz36: 36px;
+  --fz30: 30px;
+  --fz25: 25px;
+  --fz22: 22px;
+  --fz20: 20px;
+  --fz15: 15px;
+  --fz14: 14px;
+  --fz12: 12px;
+}
+
+.item.mixer .item_a .field-block {
+  width: 70%;
+  margin: 0 auto;
+}
+.item.mixer .item_a .field-block .name {
+  text-align: center;
+}
+.item .item_a {
+  padding: 49px 38px;
+  background-color: #426afa;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 28px;
+}
+.item .item_a.span2-b {
+  grid-row: span 2;
+}
+.item .item_a.span2-r {
+  grid-column: span 2;
+}
+.item .item_a.info {
+  background-color: #fff;
+  border: 1px solid #426afa;
+  padding: 16px 38px;
+  border-radius: 10px;
+}
+.item .item_a.info .info {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-weight: 600;
+}
+.item .item_a.info .info > span {
+  flex: 1;
+}
+.item .item_a .field-block {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+.item .item_a .field-block .name {
+  font-size: var(--fz25);
+  font-weight: 600;
+  color: #fff;
+}
+.item .item_a .field-block .field {
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.item .item_a .field-block .field input {
+  width: 100%;
+}
+.item .item_a .field-block .field select {
+  max-width: 210px;
+  text-align: right;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px 30px;
+  font-size: var(--fz20);
+  border-radius: 10px;
+  font-weight: 500;
+  transition: all 0.3s;
+  cursor: pointer;
+  color: #fff;
+  background-color: #426afa;
+  width: 100%;
+  height: 100%;
+}
+.btn:hover {
+  background-color: #1a4cff;
+  color: #fff;
+}
+.name_h1 {
+  font-family: "Nunito Sans", sans-serif;
+  color: white;
+  font-size: var(--fz25);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.dot-1, .dot-2, .dot-3 {
+  animation: jump 1s infinite;
+}
+
+.dots .dot-1 {
+  animation-delay: 100ms;
+}
+.dots .dot-2 {
+  animation-delay: 200ms;
+}
+.dots .dot-3 {
+  animation-delay: 300ms;
+}
+
+@keyframes jump {
+  0%   {transform: translate3d(0, 0, 0);}
+  20%  {transform: translate3d(0, -5px, 0);}
+  40%  {transform: translate3d(0, 0, 0);}
+}
