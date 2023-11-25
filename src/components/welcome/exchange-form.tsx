@@ -155,7 +155,7 @@ export const Form = () => {
                             value={formik.values.valueValuta}
                         />
                         <div className="  relative">
-                            <List name="currentValuta" select1={selectedFiatValuta[selectedFiatValuteIndex]} select={selectedValuta[selectedValuteIndex]} setSelect={setSelectedValutaIndex} arrayList={selectedValuta}/>
+                            <List name="currentValuta" select1={selectedFiatValuta[selectedFiatValuteIndex]} select={selectedValuta[selectedValuteIndex]} setSelect={setSelectedValutaIndex} arrayList={selectedValuta || []}/>
                         </div>                        
                     </div>
                     {formik.touched.valueValuta && formik.errors.valueValuta ? (
@@ -176,7 +176,7 @@ export const Form = () => {
                     <div className="bg-white py-4 max-md:py-3 rounded-lg items-center flex px-5 gap-5 justify-between relative">
                         <p className="">{state?.convertedValue}</p>
                         <div className="  relative">
-                            <List name="currentFiatValuta" select1={selectedValuta[selectedValuteIndex]} select={selectedFiatValuta[selectedFiatValuteIndex]} setSelect={setSelectedFiatValutasIndex} arrayList={selectedFiatValuta}/>
+                            <List name="currentFiatValuta" select1={selectedValuta[selectedValuteIndex]} select={selectedFiatValuta[selectedFiatValuteIndex]} setSelect={setSelectedFiatValutasIndex} arrayList={selectedFiatValuta || []}/>
                         </div>                        
                     </div>
                     {formik.touched.currentFiatValuta && formik.errors.currentFiatValuta ? (

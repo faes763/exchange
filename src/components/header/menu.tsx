@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const navLinksLanguage = {
     en: [
@@ -50,6 +50,11 @@ export function Menu() {
     const locale = useLocale() as "en" | "ru";
     const t = useTranslations();
 
+    const [item,setItem] = useState<string | null>(null);
+    useEffect(()=>{
+        setItem(localStorage.getItem("token"))
+    },[])
+
     return(
         <nav>
             <div className=" lg:hidden">
@@ -87,12 +92,10 @@ export function Menu() {
                     >
                         <Link 
                             onClick={()=>setOpen(false)} 
-                            href={navLinksLanguage[locale].length-1 != index ?link.href : localStorage.getItem("token") ? link.href : "/auth"}
+                            href={navLinksLanguage[locale].length-1 != index ? link.href : item ? link.href : "/auth"}
                             
                         >
-                            {navLinksLanguage[locale].length-1 != index ?link.name : localStorage.getItem("token") ? link.name : t("Войти")}
-                            {/* {link.name} */}
-                            {/* {localStorage.getItem("token")} */}
+                            {navLinksLanguage[locale].length-1 != index ? link.name : item ? link.name : t("Войти")}
                         </Link>
                     </li>
                 ))}
