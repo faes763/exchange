@@ -121,7 +121,7 @@ export const Form = () => {
         formik.setFieldValue('currentValuta',selectedValuta[selectedValuteIndex]);
         formik.setFieldValue('currentFiatValuta',selectedFiatValuta[selectedFiatValuteIndex]);
 
-        fetcherFetch(`course/?from=${selectedValuta[selectedValuteIndex]}&to=${selectedFiatValuta[selectedFiatValuteIndex]}&amount=${formik.values.valueValuta}`).then((res:courseType)=>{
+        fetcherFetch(`course/?from=${selectedValuta[selectedValuteIndex] || "BTC"}&to=${selectedFiatValuta[selectedFiatValuteIndex] || "USDTTRC20"}&amount=${formik.values.valueValuta}`).then((res:courseType)=>{
             setState(res);
         });
     },[selectedFiatValuteIndex,selectedValuteIndex,selectedValuta,formik.values.valueValuta]);
@@ -132,8 +132,19 @@ export const Form = () => {
         });
         fetcherFetch('assets?flag=false').then((res:string[])=>{
             setSelectedFiatValutas(res.reverse());
+            res.find((vault,index)=>{
+                if(vault == "USDTTRC20") {
+                    setSelectedFiatValutasIndex(index);
+                }
+            });
         });
     },[]);
+
+    function numbFixed(el:string) {
+        if(["TCSBQRUB","CASHRUB2","CASHRUB"].includes(el)) return 0;
+        if(["SBERRUB","SBPRUB"].includes(el)) return 2;
+        if(["DAI","XMR","DOGE","LTC","USDTERC20","USDTTRC20","ETH","BTC"].includes(el)) return 5;
+    }
     
     return (
       <form
@@ -166,15 +177,15 @@ export const Form = () => {
                     ) : null}
                     {state && state.oneValue>0 && (
                     <div className="text-white md:text-lg">
-                        <p>1 {selectedValuta[selectedValuteIndex]} = {state?.oneValue} {selectedFiatValuta[selectedFiatValuteIndex].toLowerCase().includes('run') ? "RUB" : selectedFiatValuta[selectedFiatValuteIndex]} </p>
-                        <p>Минимальная сумма обмена от {state?.minValue} {selectedValuta[selectedValuteIndex]}</p>
+                        <p>1 {selectedValuta[selectedValuteIndex]} = {+(state?.oneValue).toFixed(numbFixed(selectedFiatValuta[selectedFiatValuteIndex]))} {selectedFiatValuta[selectedFiatValuteIndex].toLowerCase().includes('run') ? "RUB" : selectedFiatValuta[selectedFiatValuteIndex]} </p>
+                        <p>Минимальная сумма обмена от {Number(state?.minValue).toFixed(numbFixed(selectedValuta[selectedValuteIndex]))} {selectedValuta[selectedValuteIndex]}</p>
                      </div>
                     )}
                 </div>
                 <div className=" p-10 max-md:p-5 space-y-2  bg-main-blue rounded-2xl">
                     <p className=" text-white  text-xl">{t('Получайте')}:</p>
                     <div className="bg-white py-4 max-md:py-3 rounded-lg items-center flex px-5 gap-5 justify-between relative">
-                        <p className="">{state?.convertedValue}</p>
+                        <p className="">{+(state?.convertedValue).toFixed(numbFixed(selectedFiatValuta[selectedFiatValuteIndex]))}</p>
                         <div className="  relative">
                             <List name="currentFiatValuta" select1={selectedValuta[selectedValuteIndex]} select={selectedFiatValuta[selectedFiatValuteIndex]} setSelect={setSelectedFiatValutasIndex} arrayList={selectedFiatValuta || []}/>
                         </div>                        

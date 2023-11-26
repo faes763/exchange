@@ -44,7 +44,7 @@ export function About() {
         <div id="about" className=" max-lg:grid-cols-1 justify-items-center gap-5 grid grid-cols-3">
             {about[locale].map((me,index)=>(
                 <div className="p-5 bg-white shadow-xl rounded-xl space-y-2  " key={me.course+index}>
-                    <Image width={40} height={40} src={me.sprite} alt={""}/>
+                    <img className=" w-10 h-10" src={me.sprite} alt={""}/>
                     <p className=" text-lg font-semibold">{me.course}</p>
                     <p>{me.text}</p>
                 </div>
