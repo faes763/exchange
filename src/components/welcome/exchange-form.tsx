@@ -131,7 +131,7 @@ export const Form = () => {
             setSelectedValutas(res);
         });
         fetcherFetch('assets?flag=false').then((res:string[])=>{
-            setSelectedFiatValutas(res.reverse());
+            setSelectedFiatValutas(res?.reverse());
             res.find((vault,index)=>{
                 if(vault == "USDTTRC20") {
                     setSelectedFiatValutasIndex(index);
@@ -151,7 +151,7 @@ export const Form = () => {
             className="grid gap-5 max-md:flex flex-col grid-cols-[repeat(2,minmax(0,1fr))]"
             onSubmit={formik.handleSubmit}
         >
-            <div className=" flex flex-col gap-5">
+            <div className=" flex justify-between flex-col gap-5">
                 <div className=" py-10 max-md:px-5 max-md:py-10 space-y-5 bg-main-blue rounded-2xl px-10">
                     <label className=" text-xl text-white">{t('Отдаете')}</label>
                     <div className="bg-white rounded-lg items-center flex px-5 gap-5 justify-between relative">
@@ -185,7 +185,7 @@ export const Form = () => {
                 <div className=" p-10 max-md:p-5 space-y-2  bg-main-blue rounded-2xl">
                     <p className=" text-white  text-xl">{t('Получайте')}:</p>
                     <div className="bg-white py-4 max-md:py-3 rounded-lg items-center flex px-5 gap-5 justify-between relative">
-                        <p className="">{+(state?.convertedValue).toFixed(numbFixed(selectedFiatValuta[selectedFiatValuteIndex]))}</p>
+                        <p className="">{Number(state?.convertedValue)?.toFixed(numbFixed(selectedFiatValuta[selectedFiatValuteIndex]))}</p>
                         <div className="  relative">
                             <List name="currentFiatValuta" select1={selectedValuta[selectedValuteIndex]} select={selectedFiatValuta[selectedFiatValuteIndex]} setSelect={setSelectedFiatValutasIndex} arrayList={selectedFiatValuta || []}/>
                         </div>                        
