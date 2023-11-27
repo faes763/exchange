@@ -101,7 +101,7 @@ export default function Request({
                 {data && <>
                     {show ? <Success status={isError ? "COMPLETED":"FAILED"}/> : 
                 <WaitSuccess
-                    amount={`${data.amountSent}`}
+                    amount={`${data.amountReceived}`}
                     status={isPaid ? "Received":"Pending"}
                     received={`${data.currencyReceived}`} 
                     addressReceived={data.addressReceived}
