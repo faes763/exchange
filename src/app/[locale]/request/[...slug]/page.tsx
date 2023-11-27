@@ -72,7 +72,7 @@ export default function Request({
        
 
     return(
-        <main >
+        <main className="min-h-screen">
            <div className=" container">
                 <div className=" max-md:flex-col items-center flex mb-8 justify-between">
                     <h1 className=" text-h1 text-center font-semibold">{t("yourRequestAccepted")}</h1>
@@ -99,7 +99,7 @@ export default function Request({
                     </div>
                     
                 {data && <>
-                    {show ? <Success status={isError ? "COMPLETED":"FAILED"}/> : 
+                    {show ? <Success status={isError ? "FAILED" : "COMPLETED"}/> : 
                 <WaitSuccess
                     amount={`${data.amountReceived}`}
                     status={isPaid ? "Received":"Pending"}
