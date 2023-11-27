@@ -69,8 +69,8 @@ export default function History() {
                 <Link href={`/request/${data.id}/${data.currencyReceived}`} className=" border-b-2 gap-1 max-md:grid-cols-1 pb-5 grid grid-cols-5" key={data.email+ index + data.id}>
                     <p className=" flex justify-between"><span className=" md:hidden">Заявка</span>#{data.id}</p>
                     <p className=" flex justify-between"><span className=" md:hidden">Дата</span> {data.createdAt}</p>
-                    <p className=" flex justify-between"><span className=" md:hidden">Отдаете</span>{data.amountSent+" "+data.currencySent}</p>
-                    <p className=" flex justify-between"><span className=" md:hidden">Получаете</span>{data.amountReceived+" "+data.currencyReceived}</p>
+                    <p className=" flex justify-between"><span className=" md:hidden">Отдаете</span>{data.amountReceived+" "+data.currencyReceived}</p>
+                    <p className=" flex justify-between"><span className=" md:hidden">Получаете</span>{data.amountSent+" "+data.currencySent}</p>
                     <p className={clsx(
                         data.status == 'COMPLETED' && "text-green-600",
                         data.status == "FAILED" && "text-red-600",

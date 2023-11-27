@@ -82,11 +82,11 @@ export default function Request({
                     <div className=" gap-5 max-lg:grid-cols-2 max-md:grid-cols-1 rounded-lg grid grid-cols-4">
                         <div className=" bg-main-gray rounded-lg py-5 px-8 space-y-4">
                             <p className=" text-[#5E5E5E]">{t("Отдаете")}:</p>
-                            <p className=" text-lg font-semibold">{data?.amountSent} {data?.currencySent}</p>
+                            <p className=" text-lg font-semibold">{data?.amountReceived} {data?.currencyReceived}</p>
                         </div>
                         <div className=" bg-main-gray py-5 rounded-lg px-8 space-y-4">
                             <p className=" text-[#5E5E5E]">{t("Получаете")}</p>
-                            <p className=" text-lg font-semibold">{data?.amountReceived} {data?.currencyReceived} </p>
+                            <p className=" text-lg font-semibold">{data?.amountSent} {data?.currencySent} </p>
                         </div>
                         <div className=" bg-main-gray py-5 rounded-lg px-8 space-y-4">
                             <p className=" text-[#5E5E5E]">E-mail:</p>
