@@ -12,7 +12,7 @@ export default function Auth() {
     const [isRegister,set] = useState(false);
 
     return(
-        <main>
+        <main className="min-h-screen">
             <div className=" gap-16 container flex flex-col items-center">
                 <p className=" text-3xl text-center font-semibold">{isRegister ? "Регистрация" : "Авторизация"}</p>
                 <Form isRegister={isRegister} setRegister={set}/>

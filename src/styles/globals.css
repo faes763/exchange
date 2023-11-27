@@ -13,6 +13,9 @@
 .container {
   @apply mx-auto
 }
+button:hover {
+  @apply opacity-70 cursor-pointer;
+}
 
 .coin {
   position: fixed;

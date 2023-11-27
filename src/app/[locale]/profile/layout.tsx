@@ -56,7 +56,11 @@ export default function ProfileLayout({
     const locale = useLocale() as 'ru' | 'en';
     const [show,setShow] = useState(false);
     const router = useRouter();
-
+    console.log(pathname);
+    console.log(pagination[locale]);
+    console.log(pathname.replace('en/',"") == pagination[locale][0].href);
+    console.log(pathname.replace('en/',""));
+    console.log(pathname.replace('en/',""));
     useEffect(()=>{
         if(localStorage.getItem('token')) {
             axiosCfg.interceptors.request.use(
@@ -81,7 +85,7 @@ export default function ProfileLayout({
 
 
     if(show)return(
-        <main>
+        <main className="min-h-screen">
             <div className="container gap-10 max-lg:flex max-lg:flex-col grid grid-cols-[300px_1fr]">
                 <div className=" space-y-8">
                     <p className=" text-3xl font-bold">Настройки</p>
@@ -90,7 +94,7 @@ export default function ProfileLayout({
                             <Link onClick={()=>{
                                 if(link.onClick) link.onClick();
                             }} className={clsx(
-                                pathname.replace('en/',"") == link.href && "text-black",
+                                pathname.replace(locale+"/","") == link.href && "text-black",
                                 "flex gap-2 text-[#9D9D9D]"
                             )} key={link.href+link.name+index} href={link.href}>
                                 <Sprite name={link.sprite} className="w-5 h-5"/>

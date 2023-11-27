@@ -82,11 +82,11 @@ export default function Request({
                     <div className=" gap-5 max-lg:grid-cols-2 max-md:grid-cols-1 rounded-lg grid grid-cols-4">
                         <div className=" bg-main-gray rounded-lg py-5 px-8 space-y-4">
                             <p className=" text-[#5E5E5E]">{t("Отдаете")}:</p>
-                            <p className=" text-lg font-semibold">{data?.amountSent} {data?.currencyReceived}</p>
+                            <p className=" text-lg font-semibold">{data?.amountSent} {data?.currencySent}</p>
                         </div>
                         <div className=" bg-main-gray py-5 rounded-lg px-8 space-y-4">
                             <p className=" text-[#5E5E5E]">{t("Получаете")}</p>
-                            <p className=" text-lg font-semibold">{data?.amountReceived} {data?.currencySent} </p>
+                            <p className=" text-lg font-semibold">{data?.amountReceived} {data?.currencyReceived} </p>
                         </div>
                         <div className=" bg-main-gray py-5 rounded-lg px-8 space-y-4">
                             <p className=" text-[#5E5E5E]">E-mail:</p>
@@ -101,8 +101,9 @@ export default function Request({
                 {data && <>
                     {show ? <Success status={isError ? "COMPLETED":"FAILED"}/> : 
                 <WaitSuccess
+                    amount={`${data.amountSent}`}
                     status={isPaid ? "Received":"Pending"}
-                    received={`${data.amountSent} ${data.currencyReceived}`} 
+                    received={`${data.currencyReceived}`} 
                     addressReceived={data.addressReceived}
                     date={`${data.createdAt}`}
                 />}
@@ -129,11 +130,13 @@ function Success({
 
 function WaitSuccess({
     addressReceived,
+    amount,
     received,
     status,
     date
 }:{
     addressReceived:string;
+    amount: string;
     received:string;
     status: "Received" | "Pending";
     date: string;
@@ -156,15 +159,15 @@ function WaitSuccess({
                 <div className="flex max-md:flex-col py-5 border-y gap-10 border-white">
                     <div className=" space-y-3">
                         <span className=" font-semibold">{t("Сумма")}:</span>
-                        <p className={`flex ${click1} items-center gap-2 text-lg`}>
-                            {received}
-                            <Sprite  onClick={()=>{
-                                navigator.clipboard.writeText(received);
+                        <p  onClick={()=>{
+                                navigator.clipboard.writeText(amount);
                                 setClick1("text-green-400")
                                 setTimeout(()=>{setClick1('text-white')},1500)
-                            }} name="copy" className={`w-5  h-5`}/>
+                            }} className={`flex ${click1} items-center gap-2 text-lg`}>
+                            {`${amount} ${received}`}
+                            <Sprite name="copy" className={`w-5 h-5`}/>
                         </p>
-                    </div>
+                    </div>  
                     <div className={` space-y-3`}>
                         <span className=" font-semibold">{t("Кошелёк")}:</span>
                         <p onClick={()=>{

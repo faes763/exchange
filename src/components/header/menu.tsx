@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react"
 
 const navLinksLanguage = {
@@ -51,9 +52,11 @@ export function Menu() {
     const t = useTranslations();
 
     const [item,setItem] = useState<string | null>(null);
+    const pathname = usePathname();
+
     useEffect(()=>{
         setItem(localStorage.getItem("token"))
-    },[])
+    },[pathname]);
 
     return(
         <nav>
