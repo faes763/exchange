@@ -9,7 +9,6 @@ import * as Yup from "yup";
 import FormClearingBtc from "./FormClearingBtc";
 import { useLocale, useTranslations } from "next-intl";
 import { axiosCfg, fetcherFetch } from "@/core-axios";
-import { CLIENT_RENEG_LIMIT } from "tls";
 
 const tabLists = {
     ru: [
@@ -21,11 +20,9 @@ const tabLists = {
         "Mix"
     ]
 }
-    
 
 
 export function ExchangeForm() {
-    const t = useTranslations();
     const locale = useLocale() as "en" | "ru";
     
     return (
@@ -73,35 +70,6 @@ const course:courseType = {
     maxValue: 0,
     convertedValue: 0,
     oneValue: 0,
-}
-
-function formatScientificNumber(number: number): string {
-    let formattedString: string = number.toString().toLowerCase();
-    let [base, exponent]: string[] = formattedString.split('e');
-
-    base = (+base).toFixed(15).replace(/(\.[0-9]*[1-9])0+$/, '$1').replace(/\.$/, '');
-
-    if (base.startsWith('0.')) {
-        base = base.slice(1);
-    }
-
-    return `${base}e${exponent}`;
-}
-
-
-function truncateNumber(number: number, zerosCount: number, onesCount: number): number {
-    const str: string = number.toString();
-    const decimalPart: string | undefined = str.split('.')[1];
-
-    if (decimalPart && decimalPart.startsWith('0')) {
-        const index: number = decimalPart.indexOf('0'.repeat(zerosCount) + '1'.repeat(onesCount)) + 1;
-        if (index !== -1) {
-            const truncatedNumber: number = parseFloat(str.slice(0, str.indexOf('.') + index + zerosCount + onesCount + 1));
-            return truncatedNumber;
-        }
-    }
-
-    return number
 }
 
 
@@ -169,10 +137,10 @@ export const Form = () => {
         });
     },[]);
 
-    function numbFixed(el:string) {
-        if(["TCSBQRUB","CASHRUB2","CASHRUB"].includes(el)) return 0;
-        if(["SBERRUB","SBPRUB"].includes(el)) return 2;
-        if(["DAI","XMR","DOGE","LTC","USDTERC20","USDTTRC20","ETH","BTC"].includes(el)) return 5;
+    function numbFixed(valuta:string) {
+        if(["TCSBQRUB","CASHRUB2","CASHRUB"].includes(valuta)) return 0;
+        if(["SBERRUB","SBPRUB"].includes(valuta)) return 2;
+        if(["DAI","XMR","DOGE","LTC","USDTERC20","USDTTRC20","ETH","BTC"].includes(valuta)) return 5;
     }
 
     
@@ -209,7 +177,7 @@ export const Form = () => {
                     {state && state.oneValue>0 && (
                     <div className="text-white md:text-lg">
                         <p>1 {sendValutas[sendIndex]} = {+(state?.oneValue).toFixed(numbFixed(receiverValutas[receiverIndex]))} {receiverValutas[receiverIndex].toLowerCase().includes('run') ? "RUB" : receiverValutas[receiverIndex]} </p>
-                        <p>Минимальная сумма обмена от  {Number(state?.minValue)} {sendValutas[sendIndex]}</p>
+                        <p>Минимальная сумма обмена от  {Number(state?.minValue || 0)} {sendValutas[sendIndex]}</p>
                      </div>
                     )}
                 </div>
