@@ -4,11 +4,12 @@ import clsx from "clsx";
 import { useFormik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 import FormClearingBtc from "./FormClearingBtc";
 import { useLocale, useTranslations } from "next-intl";
 import { axiosCfg, fetcherFetch } from "@/core-axios";
+import { CLIENT_RENEG_LIMIT } from "tls";
 
 const tabLists = {
     ru: [
@@ -74,35 +75,63 @@ const course:courseType = {
     oneValue: 0,
 }
 
+function formatScientificNumber(number: number): string {
+    let formattedString: string = number.toString().toLowerCase();
+    let [base, exponent]: string[] = formattedString.split('e');
+
+    base = (+base).toFixed(15).replace(/(\.[0-9]*[1-9])0+$/, '$1').replace(/\.$/, '');
+
+    if (base.startsWith('0.')) {
+        base = base.slice(1);
+    }
+
+    return `${base}e${exponent}`;
+}
+
+
+function truncateNumber(number: number, zerosCount: number, onesCount: number): number {
+    const str: string = number.toString();
+    const decimalPart: string | undefined = str.split('.')[1];
+
+    if (decimalPart && decimalPart.startsWith('0')) {
+        const index: number = decimalPart.indexOf('0'.repeat(zerosCount) + '1'.repeat(onesCount)) + 1;
+        if (index !== -1) {
+            const truncatedNumber: number = parseFloat(str.slice(0, str.indexOf('.') + index + zerosCount + onesCount + 1));
+            return truncatedNumber;
+        }
+    }
+
+    return number
+}
+
+
 export const Form = () => {
     const router = useRouter();
     const t = useTranslations();
     const [state,setState] = useState<courseType>(course);
-
+    const [received,setReceiver] = useState<number | null>(null);
     const validationSchema = Yup.object().shape({
         telegram: Yup.string().required(t("Введите логин телеграма")),
         email: Yup.string().email(t("Введите свой e-mail")).required(t("Введите свой e-mail")),
-        currentValuta: Yup.string().required(t("Выберите валюту")),
+        send: Yup.string().required(t("Выберите валюту")),
         valueValuta: Yup.number().required(t("Введите число")).min(state.minValue,`${t("Минимальное число")}: ${state.minValue}`).max(state.maxValue,`${t("Максимальное число")}: ${state.maxValue}`),
-        currentFiatValuta: Yup.string().required(t("Выберите валюту")),
+        receiver: Yup.string().required(t("Выберите валюту")),
         account: Yup.string().required(t("Счёт получения"))
     });
     const formik = useFormik({
       initialValues: {
         telegram: "",
         email: "",
-        currentValuta: "",
+        send: "",
         valueValuta: 1,
-        currentFiatValuta: "",
+        receiver: "",
         account: ""
       },
       validationSchema:  validationSchema,
       onSubmit: async (values) => {
         try {
-            
-
-            axiosCfg.get(`/exchange/ticket/create?currency=${values.currentValuta}&amountSent=${state.convertedValue}&telegramId=${values.telegram}&email=${values.email}&amountReceived=${values.valueValuta}&addressSent=${values.account}&currencySent=${selectedFiatValuta[selectedFiatValuteIndex]}`).then((res:any)=>{
-                router.push(`/request/${res.data.id}/${values.currentValuta}`)
+            axiosCfg.get(`/exchange/ticket/create?currency=${values.send}&amountSent=${state.convertedValue}&telegramId=${values.telegram}&email=${values.email}&amountReceived=${values.valueValuta}&addressSent=${values.account}&currencySent=${receiverValutas[receiverIndex]}`).then((res:any)=>{
+                router.push(`/request/${res.data.id}/${values.send}`)
             })
         } catch (error) {
             console.error(error);
@@ -111,31 +140,31 @@ export const Form = () => {
       },
     });
 
-    const [selectedValuta, setSelectedValutas] = useState<string[]>([""]);
-    const [selectedValuteIndex,setSelectedValutaIndex] = useState<number>(0);
+    const [sendValutas, setSendValutas] = useState<string[]>([""]);
+    const [sendIndex,setSendIndex] = useState<number>(0);
 
-    const [selectedFiatValuta, setSelectedFiatValutas] = useState<string[]>([""]);
-    const [selectedFiatValuteIndex,setSelectedFiatValutasIndex] = useState<number>(0);
+    const [receiverValutas, setReceiverValutas] = useState<string[]>([""]);
+    const [receiverIndex,setReceiverIndex] = useState<number>(0);
 
     useEffect(()=>{
-        formik.setFieldValue('currentValuta',selectedValuta[selectedValuteIndex]);
-        formik.setFieldValue('currentFiatValuta',selectedFiatValuta[selectedFiatValuteIndex]);
+        const send = sendValutas[sendIndex];
+        const receiver = receiverValutas[receiverIndex];
 
-        fetcherFetch(`course/?from=${selectedValuta[selectedValuteIndex] || "BTC"}&to=${selectedFiatValuta[selectedFiatValuteIndex] || "USDTTRC20"}&amount=${formik.values.valueValuta}`).then((res:courseType)=>{
+        formik.setFieldValue('send',send);
+        formik.setFieldValue('receiver',receiver);
+
+        fetcherFetch(`course/?from=${send || "BTC"}&to=${receiver || "USDTTRC20"}&amount=${formik.values.valueValuta}`).then((res:courseType)=>{
             setState(res);
+            setReceiver(res.oneValue);
         });
-    },[selectedFiatValuteIndex,selectedValuteIndex,selectedValuta,formik.values.valueValuta]);
+    },[sendIndex,receiverIndex]);
     
     useEffect(()=>{
-        fetcherFetch('assets?flag=true').then((res:string[])=>{
-            setSelectedValutas(res);
-        });
+        fetcherFetch('assets?flag=true').then(setSendValutas);
         fetcherFetch('assets?flag=false').then((res:string[])=>{
-            setSelectedFiatValutas(res?.reverse());
+            setReceiverValutas(res?.reverse());
             res.find((vault,index)=>{
-                if(vault == "USDTTRC20") {
-                    setSelectedFiatValutasIndex(index);
-                }
+                if(vault == "USDTTRC20") setReceiverIndex(index);
             });
         });
     },[]);
@@ -145,6 +174,7 @@ export const Form = () => {
         if(["SBERRUB","SBPRUB"].includes(el)) return 2;
         if(["DAI","XMR","DOGE","LTC","USDTERC20","USDTTRC20","ETH","BTC"].includes(el)) return 5;
     }
+
     
     return (
       <form
@@ -161,38 +191,46 @@ export const Form = () => {
                             id="valueValuta"
                             name="valueValuta"
                             type="number"
-                            onChange={formik.handleChange}
+                            onChange={(e)=>{
+                                setReceiver(+e.target.value*state.oneValue);
+                                formik.handleChange(e);
+                            }}
                             onBlur={formik.handleBlur}
                             value={formik.values.valueValuta}
                         />
                         <div className="  relative">
-                            <List name="currentValuta" select1={selectedFiatValuta[selectedFiatValuteIndex]} select={selectedValuta[selectedValuteIndex]} setSelect={setSelectedValutaIndex} arrayList={selectedValuta || []}/>
+                            <List name="send" select1={receiverValutas[receiverIndex]} select={sendValutas[sendIndex]} setSelect={setSendIndex} arrayList={sendValutas || []}/>
                         </div>                        
                     </div>
-                    {formik.touched.valueValuta && formik.errors.valueValuta ? (
-                        <div className="  text-right text-red-600">{formik.errors.valueValuta}</div>
-                    ) : null}
-                    {formik.touched.currentValuta && formik.errors.currentValuta ? (
-                        <div className="text-right text-red-600">{formik.errors.currentValuta}</div>
-                    ) : null}
+                    <ErrorView id="valueValuta" formik={formik}/>
+                    <ErrorView id="send" formik={formik}/>
+
+
                     {state && state.oneValue>0 && (
                     <div className="text-white md:text-lg">
-                        <p>1 {selectedValuta[selectedValuteIndex]} = {+(state?.oneValue).toFixed(numbFixed(selectedFiatValuta[selectedFiatValuteIndex]))} {selectedFiatValuta[selectedFiatValuteIndex].toLowerCase().includes('run') ? "RUB" : selectedFiatValuta[selectedFiatValuteIndex]} </p>
-                        <p>Минимальная сумма обмена от {Number(state?.minValue).toFixed(numbFixed(selectedValuta[selectedValuteIndex]))} {selectedValuta[selectedValuteIndex]}</p>
+                        <p>1 {sendValutas[sendIndex]} = {+(state?.oneValue).toFixed(numbFixed(receiverValutas[receiverIndex]))} {receiverValutas[receiverIndex].toLowerCase().includes('run') ? "RUB" : receiverValutas[receiverIndex]} </p>
+                        <p>Минимальная сумма обмена от  {Number(state?.minValue)} {sendValutas[sendIndex]}</p>
                      </div>
                     )}
                 </div>
                 <div className=" p-10 max-md:p-5 space-y-2  bg-main-blue rounded-2xl">
                     <p className=" text-white  text-xl">{t('Получайте')}:</p>
                     <div className="bg-white py-4 max-md:py-3 rounded-lg items-center flex px-5 gap-5 justify-between relative">
-                        <p className="">{Number(state?.convertedValue)?.toFixed(numbFixed(selectedFiatValuta[selectedFiatValuteIndex]))}</p>
+                        <input
+                            className="outline-none"
+                            placeholder="Введите число"
+                            type="number"
+                            onChange={(e)=>{
+                                setReceiver(+e.target.value);
+                                formik.setFieldValue('valueValuta',+e.target.value/state.oneValue)
+                            }}
+                            value={`${received}`} 
+                        />
                         <div className="  relative">
-                            <List name="currentFiatValuta" select1={selectedValuta[selectedValuteIndex]} select={selectedFiatValuta[selectedFiatValuteIndex]} setSelect={setSelectedFiatValutasIndex} arrayList={selectedFiatValuta || []}/>
+                            <List name="receiver" select1={sendValutas[sendIndex]} select={receiverValutas[receiverIndex]} setSelect={setReceiverIndex} arrayList={receiverValutas || []}/>
                         </div>                        
                     </div>
-                    {formik.touched.currentFiatValuta && formik.errors.currentFiatValuta ? (
-                        <div className="text-right text-red-600">{formik.errors.currentFiatValuta}</div>
-                    ) : null}
+                    <ErrorView id="receiver" formik={formik}/>
                 </div>
                 
                 <div className="bg-white max-md:px-5 flex gap-5 py-4 border rounded-2xl border-main-blue px-10">
@@ -214,9 +252,7 @@ export const Form = () => {
                             onBlur={formik.handleBlur}
                             value={formik.values.email}
                         />
-                        {formik.touched.email && formik.errors.email ? (
-                            <div className=" text-red-600">{formik.errors.email}</div>
-                        ) : null}
+                        <ErrorView id="email" formik={formik}/>
                     </div>
                     <div className=" space-y-2">
                         <label className=" text-xl text-white">{t("Логин в телеграме")}</label>
@@ -230,9 +266,7 @@ export const Form = () => {
                             onBlur={formik.handleBlur}
                             value={formik.values.telegram}
                         />
-                        {formik.touched.telegram && formik.errors.telegram ? (
-                            <div className=" text-red-600">{formik.errors.telegram}</div>
-                        ) : null}
+                        <ErrorView id="telegram" formik={formik}/>
                     </div>
                     <div className=" space-y-2">
                         <label className=" text-xl text-white">{t("Счёт получения")}</label>
@@ -246,9 +280,7 @@ export const Form = () => {
                             onBlur={formik.handleBlur}
                             value={formik.values.account}
                         />
-                        {formik.touched.account && formik.errors.account ? (
-                            <div className=" text-red-600">{formik.errors.account}</div>
-                        ) : null}
+                        <ErrorView id="account" formik={formik}/>
                     </div>
                 </div>
                 
@@ -261,6 +293,22 @@ export const Form = () => {
       </form>
     );
 };
+const cards = {
+    ru: {
+        SBPRUB: 'СБП',
+        SBERRUB: 'Сбербанк',
+        CASHRUB: 'Наличные Москва',
+        CASHRUB2: 'Наличные другие города',
+        TCSBQRUB: 'Тинькофф QR'
+    },
+    en: {
+        SBPRUB: "SBP",
+        SBERRUB: "Sberbank",
+        CASHRUB: "Cash Moscow",
+        CASHRUB2: "Cash other cities",
+        TCSBQRUB: "Tinkoff QR",
+    }
+}
 
 function List({
     arrayList,
@@ -275,21 +323,31 @@ function List({
     name: string;
     select1: string;
 }) {
+    const locale = useLocale() as "ru" | "en";
+    const map = cards[locale];
+
     return(
     <Listbox
         name={name}
         value={0}
         onChange={setSelect}
     >
-        <Listbox.Button className={' uppercase max-md:text-sm text-main-dark-gray whitespace-nowrap'}>{select}</Listbox.Button>
-        <Listbox.Options className={' flex flex-col gap-2 px-5 top-7 z-10 -right-5 rounded-b-xl absolute bg-white'}>
-          {arrayList.map((list,index) => (
-            (select != list && list!=select1) &&(
-                <Listbox.Option className={'whitespace-nowrap max-md:text-sm uppercase cursor-pointer text-main-dark-gray hover:text-black '} key={index+list} value={index}>
-                {list}
+        <Listbox.Button className={' uppercase max-md:text-xs text-main-dark-gray '}>{(map as any)[select] != undefined? (map as any)[select] : select}</Listbox.Button>
+        <Listbox.Options className={' flex flex-col gap-2 px-5 top-full z-10 -right-5 rounded-b-xl absolute bg-white'}>
+            {arrayList.map((list,index) => (
+            (select != list && list!=select1) && (
+                <Listbox.Option className={'whitespace-nowrap max-md:text-xs uppercase cursor-pointer text-main-dark-gray hover:text-black '} key={index+list} value={index}>
+                {(map as any)[list] != undefined? (map as any)[list] : list}
                 </Listbox.Option>
             )))}
         </Listbox.Options>
       </Listbox>
     )
+}
+
+function ErrorView({id,formik}:{id:string,formik:any}) {
+    if(formik.touched[id] && formik.errors[id]) return (
+        <div className=" text-red-600">{formik.errors[id]}</div>
+    )
+    return null;
 }

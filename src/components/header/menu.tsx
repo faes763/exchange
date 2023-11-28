@@ -18,7 +18,7 @@ const navLinksLanguage = {
             href: "/#reviews"
         },
         {
-            name: "About Us?",
+            name: "Who We Are?",
             href: "/#about"
         },
         {
