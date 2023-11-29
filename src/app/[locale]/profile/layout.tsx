@@ -56,11 +56,6 @@ export default function ProfileLayout({
     const locale = useLocale() as 'ru' | 'en';
     const [show,setShow] = useState(false);
     const router = useRouter();
-    console.log(pathname);
-    console.log(pagination[locale]);
-    console.log(pathname.replace('en/',"") == pagination[locale][0].href);
-    console.log(pathname.replace('en/',""));
-    console.log(pathname.replace('en/',""));
     useEffect(()=>{
         if(localStorage.getItem('token')) {
             axiosCfg.interceptors.request.use(

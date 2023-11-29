@@ -12,7 +12,7 @@ export function Welcome() {
                 <h1 className=" text-h1 text-center font-semibold">{t('h1.text')}<span className=" text-main-blue font-bold">{t('h1.span')}</span> {t('h1.text1')}</h1>
                 <ExchangeForm/>
                 <How/>
-                <Reviews/>
+                {/* <Reviews/> */}
                 <About/>
             </div>
             <div className="coin coin_1"></div>

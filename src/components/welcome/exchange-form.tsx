@@ -98,7 +98,7 @@ export const Form = () => {
       validationSchema:  validationSchema,
       onSubmit: async (values) => {
         try {
-            axiosCfg.get(`/exchange/ticket/create?currency=${values.send}&amountSent=${state.convertedValue}&telegramId=${values.telegram}&email=${values.email}&amountReceived=${values.valueValuta}&addressSent=${values.account}&currencySent=${receiverValutas[receiverIndex]}`).then((res:any)=>{
+            axiosCfg.get(`/exchange/ticket/create?currency=${values.send}&amountSent=${received}&telegramId=${values.telegram}&email=${values.email}&amountReceived=${values.valueValuta}&addressSent=${values.account}&currencySent=${receiverValutas[receiverIndex]}`).then((res:any)=>{
                 router.push(`/request/${res.data.id}/${values.send}`)
             })
         } catch (error) {
@@ -135,6 +135,23 @@ export const Form = () => {
                 if(vault == "USDTTRC20") setReceiverIndex(index);
             });
         });
+        const token = localStorage.getItem("token");
+        if(token) {
+            axiosCfg.interceptors.request.use(
+                config => {
+                    config.headers.Authorization = `Bearer ${token}`;
+                    return config;
+                },
+                error => {
+                    return Promise.reject(error);
+                }
+            );
+            axiosCfg.get("/exchange/user/info").then((res)=>{
+                formik.setFieldValue('email',res.data?.email || "");
+                formik.setFieldValue('telegram',res.data?.telegram || "");
+
+            })
+        }
     },[]);
 
     function numbFixed(valuta:string) {
@@ -160,7 +177,7 @@ export const Form = () => {
                             name="valueValuta"
                             type="number"
                             onChange={(e)=>{
-                                setReceiver(+e.target.value*state.oneValue);
+                                setReceiver(+(+e.target.value*state.oneValue).toFixed(2));
                                 formik.handleChange(e);
                             }}
                             onBlur={formik.handleBlur}
@@ -177,7 +194,7 @@ export const Form = () => {
                     {state && state.oneValue>0 && (
                     <div className="text-white md:text-lg">
                         <p>1 {sendValutas[sendIndex]} = {+(state?.oneValue).toFixed(numbFixed(receiverValutas[receiverIndex]))} {receiverValutas[receiverIndex].toLowerCase().includes('run') ? "RUB" : receiverValutas[receiverIndex]} </p>
-                        <p>Минимальная сумма обмена от  {Number(state?.minValue || 0)} {sendValutas[sendIndex]}</p>
+                        <p>{t('Index.minimumExchange')}  {Number(state?.minValue || 0)} {sendValutas[sendIndex]}</p>
                      </div>
                     )}
                 </div>
@@ -190,7 +207,7 @@ export const Form = () => {
                             type="number"
                             onChange={(e)=>{
                                 setReceiver(+e.target.value);
-                                formik.setFieldValue('valueValuta',+e.target.value/state.oneValue)
+                                formik.setFieldValue('valueValuta',+(+e.target.value/state.oneValue).toFixed(5))
                             }}
                             value={`${received}`} 
                         />

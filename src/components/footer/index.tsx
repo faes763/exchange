@@ -7,29 +7,29 @@ const navLinks = {
     ru: [
         {
             name: "Обмен",
-            href: "/"
+            href: "ru/"
         },
         {
             name: "Отзывы",
-            href: "/#reviews"
+            href: "ru/#reviews"
         },
         {
             name: "Кто мы?",
-            href: "/#about"
+            href: "ru/#about"
         },
     ],
     en: [
         {
             "name": "Exchange",
-            "href": "/"
+            "href": "en/"
         },
         {
             "name": "Reviews",
-            "href": "/#reviews"
+            "href": "en/#reviews"
         },
         {
             "name": "Who We Are?",
-            "href": "/#about"
+            "href": "en/#about"
         }
     ]
 }

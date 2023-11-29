@@ -11,37 +11,37 @@ const navLinksLanguage = {
     en: [
         {
             name: "Home",
-            href: "/"
+            href: "en/"
         },
         {
             name: "Reviews",
-            href: "/#reviews"
+            href: "en/#reviews"
         },
         {
             name: "Who We Are?",
-            href: "/#about"
+            href: "en/#about"
         },
         {
             name: "Profile",
-            href: "/profile"
+            href: "en/profile"
         },
     ],
     ru: [
         {
             name: "Главная",
-            href: "/"
+            href: "ru/"
         },
         {
             name: "Отзывы",
-            href: "/#reviews"
+            href: "ru/#reviews"
         },
         {
             name: "Кто мы?",
-            href: "/#about"
+            href: "ru/#about"
         },
         {
             name: "Личный кабинет",
-            href: "/profile"
+            href: "ru/profile"
         },
     ]
 }

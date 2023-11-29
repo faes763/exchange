@@ -25,18 +25,10 @@ const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email address"),
     telegram: Yup.string(),
     password: Yup.string()
-      .min(8, "Password must be at least 8 characters"),
+        .min(8, "Password must be at least 8 characters"),
     repeatPassword: Yup.string()
-      .test('password-match', 'Passwords must match', function (value) {
-        const password = this.parent.password;
-        if (password) {
-          return value === password;
-        }
-        return true;
-      })
-      .when('password', (password, schema) => {
-        return password ? schema.required('Repeat password is required when password is set') : schema;
-      })
+        .oneOf([Yup.ref('password'), ''], 'Passwords must match'),
+        
   });
 function Form({
     borderStyle = "focus:border-black",
@@ -86,7 +78,6 @@ function Form({
                 }
             );
             axiosCfg('exchange/user/info').then(res=>{
-                console.log(res);
                 formik.setFieldValue("email",res.data?.email);
                 formik.setFieldValue("telegram",res.data?.telegram || "");
                 // setShow(true);
@@ -108,6 +99,7 @@ function Form({
             <div className="w-full space-y-2">
                 <label className=" text-[#6A6A6A]" htmlFor="email">E-mail</label>
                 <input
+                    readOnly
                     className={`w-full border  bg-transparent outline-none border-main-blue px-5 py-3 rounded-lg`}
                     placeholder="E-mail"
                     id="email"
@@ -140,7 +132,7 @@ function Form({
             <div className="w-full space-y-2">
                 <label  className=" text-[#6A6A6A]" htmlFor="telegram">Telegram</label>
                 <input
-                   className={`w-full border  bg-transparent outline-none border-main-blue px-5 py-3 rounded-lg`}
+                    className={`w-full border  bg-transparent outline-none border-main-blue px-5 py-3 rounded-lg`}
                     placeholder={t("Введите логин телеграма")}
                     id="telegram"
                     name="telegram"

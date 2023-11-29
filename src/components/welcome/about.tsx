@@ -1,4 +1,4 @@
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image"
 
 const about = {
@@ -40,15 +40,19 @@ const about = {
 
 export function About() {
     const locale = useLocale() as "en" | "ru";
+    const t = useTranslations("Index");
     return(
-        <div id="about" className=" max-lg:grid-cols-1 justify-items-center gap-5 grid grid-cols-3">
-            {about[locale].map((me,index)=>(
-                <div className="p-5 bg-white shadow-xl rounded-xl space-y-2  " key={me.course+index}>
-                    <img className=" w-10 h-10" src={me.sprite} alt={""}/>
-                    <p className=" text-lg font-semibold">{me.course}</p>
-                    <p>{me.text}</p>
-                </div>
-            ))}
+        <div id="about">
+            <h2 className=" text-4xl text-center font-semibold">{t("aboutTitle")} <span className=" text-main-blue font-bold">{t("aboutSubtitle")}</span></h2>
+            <div className=" max-lg:grid-cols-1 justify-items-center gap-5 grid grid-cols-3">
+                {about[locale].map((me,index)=>(
+                    <div className="p-5 bg-white shadow-xl rounded-xl space-y-2  " key={me.course+index}>
+                        <img className=" w-10 h-10" src={me.sprite} alt={""}/>
+                        <p className=" text-lg font-semibold">{me.course}</p>
+                        <p>{me.text}</p>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

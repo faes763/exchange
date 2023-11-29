@@ -4,19 +4,35 @@ import { useFormik } from "formik";
 import Link from "next/link"
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import * as Yup from "yup";
-
+import 'react-toastify/dist/ReactToastify.css';
+import { AxiosError } from "axios";
 
 
 export default function Auth() {
     const [isRegister,set] = useState(false);
-
+    const notify = () => toast("Wow so easy!");
     return(
         <main className="min-h-screen">
             <div className=" gap-16 container flex flex-col items-center">
                 <p className=" text-3xl text-center font-semibold">{isRegister ? "Регистрация" : "Авторизация"}</p>
                 <Form isRegister={isRegister} setRegister={set}/>
             </div>
+            {/* <button onClick={notify}>Notify!</button> */}
+            {/* <ToastContainer /> */}
+            <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
         </main>
     )
 }
@@ -85,11 +101,30 @@ function Form({
               })
             .catch(error=>{
                 console.error(error);
-                alert("Произошла ошибка... \nПопробуйте позже")
+                toast.error(error.response?.data.message || "Error", {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             })
-        } catch (error) {
+        } catch (error:any) {
             console.error(error);
-            alert("Произошла ошибка... \n попробуйте позже")
+            toast.error("Error", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            // alert("Произошла ошибка... \n попробуйте позже")
         }
       },
     });
@@ -162,6 +197,7 @@ function Form({
                 {isRegister ? "Уже зарегистрированы?" : " Еще не зарегистрированы? "}
                 <p  className="  text-main-blue">{isRegister ? " Войти" : " Зарегистрироваться"}</p>
             </div>
+            
         </form>
     )
 }
