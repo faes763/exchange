@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link"
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 
@@ -48,11 +49,12 @@ function Form({
       },
       validationSchema:  validationSchema,
       onSubmit: (values) => {
-        console.log(values);
+
         try {
-            axiosCfg.get(`exchange/user/change?telegramId=${values.telegram}&password=${values.password}&email=${values.email}`)
+            axiosCfg.get(`exchange/user/change?telegramId=${values.telegram}${values.password.length>0 ?`&password=${values.password}`:""}&email=${values.email}`)
               .then((res)=>{
                 console.log(res);
+                toast.success(t("Данные успешно обновлены!"))
                 // router.push('/successfully');
               })
             .catch(error=>{
@@ -96,6 +98,7 @@ function Form({
             onSubmit={formik.handleSubmit}
             className=" bg-main-gray p-10  max-md:p-5 max-md:grid-cols-1 rounded-2xl grid grid-cols-2 justify-items-center items-end gap-10"
         >
+            
             <div className="w-full space-y-2">
                 <label className=" text-[#6A6A6A]" htmlFor="email">E-mail</label>
                 <input

@@ -78,11 +78,19 @@ export const Form = () => {
     const t = useTranslations();
     const [state,setState] = useState<courseType>(course);
     const [received,setReceiver] = useState<number | null>(null);
+
+    const [sendValutas, setSendValutas] = useState<string[]>([""]);
+    const [sendIndex,setSendIndex] = useState<number>(0);
+
+    const [receiverValutas, setReceiverValutas] = useState<string[]>([""]);
+    const [receiverIndex,setReceiverIndex] = useState<number>(0);
+
+
     const validationSchema = Yup.object().shape({
         telegram: Yup.string().required(t("Введите логин телеграма")),
         email: Yup.string().email(t("Введите свой e-mail")).required(t("Введите свой e-mail")),
         send: Yup.string().required(t("Выберите валюту")),
-        valueValuta: Yup.number().required(t("Введите число")).min(state.minValue,`${t("Минимальное число")}: ${state.minValue}`).max(state.maxValue,`${t("Максимальное число")}: ${state.maxValue}`),
+        valueValuta: Yup.number().required(t("Введите число")).min(state.minValue,`${t("Минимальное число")}: ${Number(state.minValue)?.toFixed(6)}`).max(state.maxValue,`${t("Максимальное число")}: ${state.maxValue}`),
         receiver: Yup.string().required(t("Выберите валюту")),
         account: Yup.string().required(t("Счёт получения"))
     });
@@ -108,11 +116,7 @@ export const Form = () => {
       },
     });
 
-    const [sendValutas, setSendValutas] = useState<string[]>([""]);
-    const [sendIndex,setSendIndex] = useState<number>(0);
-
-    const [receiverValutas, setReceiverValutas] = useState<string[]>([""]);
-    const [receiverIndex,setReceiverIndex] = useState<number>(0);
+    
 
     useEffect(()=>{
         const send = sendValutas[sendIndex];
@@ -123,7 +127,7 @@ export const Form = () => {
 
         fetcherFetch(`course/?from=${send || "BTC"}&to=${receiver || "USDTTRC20"}&amount=${formik.values.valueValuta}`).then((res:courseType)=>{
             setState(res);
-            setReceiver(res.oneValue);
+            setReceiver(+Number(res.oneValue)?.toFixed(numbFixed(receiverValutas[receiverIndex])));
         });
     },[sendIndex,receiverIndex]);
     
@@ -155,9 +159,9 @@ export const Form = () => {
     },[]);
 
     function numbFixed(valuta:string) {
-        if(["TCSBQRUB","CASHRUB2","CASHRUB"].includes(valuta)) return 0;
-        if(["SBERRUB","SBPRUB"].includes(valuta)) return 2;
-        if(["DAI","XMR","DOGE","LTC","USDTERC20","USDTTRC20","ETH","BTC"].includes(valuta)) return 5;
+        if(["TCSBQRUB","CASHRUB2","CASHRUB","SBERRUB","SBPRUB"].includes(valuta)) return 0;
+        if(['USDTTRC20',"USDTERC20","DAI"].includes(valuta)) return 3
+        if(["XMR","DOGE","LTC",,"ETH","BTC"].includes(valuta)) return 6;
     }
 
     
@@ -177,11 +181,11 @@ export const Form = () => {
                             name="valueValuta"
                             type="number"
                             onChange={(e)=>{
-                                setReceiver(+(+e.target.value*state.oneValue).toFixed(2));
+                                setReceiver(+(+e.target.value*state.oneValue).toFixed(numbFixed(receiverValutas[receiverIndex])));
                                 formik.handleChange(e);
                             }}
                             onBlur={formik.handleBlur}
-                            value={formik.values.valueValuta}
+                            value={+Number(formik.values.valueValuta)?.toFixed(numbFixed(sendValutas[sendIndex]))}
                         />
                         <div className="  relative">
                             <List name="send" select1={receiverValutas[receiverIndex]} select={sendValutas[sendIndex]} setSelect={setSendIndex} arrayList={sendValutas || []}/>
@@ -194,7 +198,7 @@ export const Form = () => {
                     {state && state.oneValue>0 && (
                     <div className="text-white md:text-lg">
                         <p>1 {sendValutas[sendIndex]} = {+(state?.oneValue).toFixed(numbFixed(receiverValutas[receiverIndex]))} {receiverValutas[receiverIndex].toLowerCase().includes('run') ? "RUB" : receiverValutas[receiverIndex]} </p>
-                        <p>{t('Index.minimumExchange')}  {Number(state?.minValue || 0)} {sendValutas[sendIndex]}</p>
+                        <p>{t('Index.minimumExchange')}  {Number(state?.minValue || 0).toFixed(6)} {sendValutas[sendIndex]}</p>
                      </div>
                     )}
                 </div>
@@ -207,7 +211,7 @@ export const Form = () => {
                             type="number"
                             onChange={(e)=>{
                                 setReceiver(+e.target.value);
-                                formik.setFieldValue('valueValuta',+(+e.target.value/state.oneValue).toFixed(5))
+                                formik.setFieldValue('valueValuta',+(+e.target.value/state.oneValue))
                             }}
                             value={`${received}`} 
                         />
@@ -284,7 +288,9 @@ const cards = {
         SBERRUB: 'Сбербанк',
         CASHRUB: 'Наличные Москва',
         CASHRUB2: 'Наличные другие города',
-        TCSBQRUB: 'Тинькофф QR'
+        TCSBQRUB: 'Тинькофф QR',
+        USDTTRC20: "USDT TRC20",
+        USDTERC20: "USDT ERC20",
     },
     en: {
         SBPRUB: "SBP",
@@ -292,6 +298,8 @@ const cards = {
         CASHRUB: "Cash Moscow",
         CASHRUB2: "Cash other cities",
         TCSBQRUB: "Tinkoff QR",
+        USDTTRC20: "USDT TRC20",
+        USDTERC20: "USDT ERC20",
     }
 }
 

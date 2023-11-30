@@ -6,6 +6,8 @@ import { useLocale } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const pagination = {
@@ -81,6 +83,18 @@ export default function ProfileLayout({
 
     if(show)return(
         <main className="min-h-screen">
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <div className="container gap-10 max-lg:flex max-lg:flex-col grid grid-cols-[300px_1fr]">
                 <div className=" space-y-8">
                     <p className=" text-3xl font-bold">Настройки</p>

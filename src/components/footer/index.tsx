@@ -9,10 +9,10 @@ const navLinks = {
             name: "Обмен",
             href: "ru/"
         },
-        {
-            name: "Отзывы",
-            href: "ru/#reviews"
-        },
+        // {
+        //     name: "Отзывы",
+        //     href: "ru/#reviews"
+        // },
         {
             name: "Кто мы?",
             href: "ru/#about"
@@ -23,10 +23,10 @@ const navLinks = {
             "name": "Exchange",
             "href": "en/"
         },
-        {
-            "name": "Reviews",
-            "href": "en/#reviews"
-        },
+        // {
+        //     "name": "Reviews",
+        //     "href": "en/#reviews"
+        // },
         {
             "name": "Who We Are?",
             "href": "en/#about"

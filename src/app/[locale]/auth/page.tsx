@@ -19,20 +19,18 @@ export default function Auth() {
                 <p className=" text-3xl text-center font-semibold">{isRegister ? "Регистрация" : "Авторизация"}</p>
                 <Form isRegister={isRegister} setRegister={set}/>
             </div>
-            {/* <button onClick={notify}>Notify!</button> */}
-            {/* <ToastContainer /> */}
             <ToastContainer
-                    position="bottom-right"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="light"
-                />
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </main>
     )
 }
