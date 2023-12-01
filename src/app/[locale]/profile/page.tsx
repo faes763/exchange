@@ -96,7 +96,7 @@ function Form({
     return(
         <form
             onSubmit={formik.handleSubmit}
-            className=" bg-main-gray p-10  max-md:p-5 max-md:grid-cols-1 rounded-2xl grid grid-cols-2 justify-items-center items-end gap-10"
+            className=" bg-main-gray p-10 max-md:gap-5 max-md:p-5 max-md:grid-cols-1 rounded-2xl grid grid-cols-2 justify-items-center items-end gap-10"
         >
             
             <div className="w-full space-y-2">

@@ -42,7 +42,7 @@ export function About() {
     const locale = useLocale() as "en" | "ru";
     const t = useTranslations("Index");
     return(
-        <div id="about">
+        <div id="about" className=" space-y-5">
             <h2 className=" text-4xl text-center font-semibold">{t("aboutTitle")} <span className=" text-main-blue font-bold">{t("aboutSubtitle")}</span></h2>
             <div className=" max-lg:grid-cols-1 justify-items-center gap-5 grid grid-cols-3">
                 {about[locale].map((me,index)=>(

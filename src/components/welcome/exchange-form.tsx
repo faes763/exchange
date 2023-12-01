@@ -33,8 +33,8 @@ export function ExchangeForm() {
                         <Tab
                             className={({ selected }) =>
                                 clsx(
-                                    selected ? " bg-main-blue text-white" : " text-black border border-main-blue",
-                                    " px-10 py-3 rounded-xl font-semibold tracking-wide"
+                                    selected ? " bg-main-blue text-white" : " text-black bg-white border border-main-blue",
+                                    " px-10 py-3  rounded-xl font-semibold tracking-wide"
                                 )
                             }
                             key={list + index}
@@ -85,7 +85,6 @@ export const Form = () => {
     const [receiverValutas, setReceiverValutas] = useState<string[]>([""]);
     const [receiverIndex,setReceiverIndex] = useState<number>(0);
 
-
     const validationSchema = Yup.object().shape({
         telegram: Yup.string().required(t("Введите логин телеграма")),
         email: Yup.string().email(t("Введите свой e-mail")).required(t("Введите свой e-mail")),
@@ -127,6 +126,7 @@ export const Form = () => {
 
         fetcherFetch(`course/?from=${send || "BTC"}&to=${receiver || "USDTTRC20"}&amount=${formik.values.valueValuta}`).then((res:courseType)=>{
             setState(res);
+            formik.setFieldValue('valueValuta',1);
             setReceiver(+Number(res.oneValue)?.toFixed(numbFixed(receiverValutas[receiverIndex])));
         });
     },[sendIndex,receiverIndex]);
@@ -185,7 +185,7 @@ export const Form = () => {
                                 formik.handleChange(e);
                             }}
                             onBlur={formik.handleBlur}
-                            value={+Number(formik.values.valueValuta)?.toFixed(numbFixed(sendValutas[sendIndex]))}
+                            value={formik.values.valueValuta}
                         />
                         <div className="  relative">
                             <List name="send" select1={receiverValutas[receiverIndex]} select={sendValutas[sendIndex]} setSelect={setSendIndex} arrayList={sendValutas || []}/>
@@ -207,13 +207,14 @@ export const Form = () => {
                     <div className="bg-white py-4 max-md:py-3 rounded-lg items-center flex px-5 gap-5 justify-between relative">
                         <input
                             className="outline-none"
-                            placeholder="Введите число"
+                            placeholder="Введите число" 
                             type="number"
                             onChange={(e)=>{
                                 setReceiver(+e.target.value);
-                                formik.setFieldValue('valueValuta',+(+e.target.value/state.oneValue))
+                                console.log(receiverValutas[receiverIndex]);
+                                formik.setFieldValue('valueValuta',+(+e.target.value/state.oneValue)?.toFixed(numbFixed(sendValutas[sendIndex])))
                             }}
-                            value={`${received}`} 
+                            value={`${receiverValutas[receiverIndex] == "TCSBQRUB" ? `${received}`.length>5 ? Math.floor((received || 0) / 1000) * 1000 : received : received}`} 
                         />
                         <div className="  relative">
                             <List name="receiver" select1={sendValutas[sendIndex]} select={receiverValutas[receiverIndex]} setSelect={setReceiverIndex} arrayList={receiverValutas || []}/>

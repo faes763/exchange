@@ -6,31 +6,31 @@ import Link from "next/link";
 const navLinks = {
     ru: [
         {
-            name: "Обмен",
+            name: "Главная",
             href: "ru/"
         },
         // {
         //     name: "Отзывы",
         //     href: "ru/#reviews"
         // },
-        {
-            name: "Кто мы?",
-            href: "ru/#about"
-        },
+        // {
+        //     name: "Кто мы?",
+        //     href: "ru/#about"
+        // },
     ],
     en: [
         {
-            "name": "Exchange",
+            "name": "Home",
             "href": "en/"
         },
         // {
         //     "name": "Reviews",
         //     "href": "en/#reviews"
         // },
-        {
-            "name": "Who We Are?",
-            "href": "en/#about"
-        }
+        // {
+        //     "name": "Who We Are?",
+        //     "href": "en/#about"
+        // }
     ]
 }
 
@@ -54,7 +54,7 @@ export function Footer() {
                         ))}
                             <li className="flex border border-main-blue gap-3 py-2 px-5 rounded-full">
                                 <Image width={25} height={25} alt="tg" src={'/images/telegram.svg'}/>
-                                <Link href={'/'}>Telegram Support</Link>
+                                <Link target="blank" href={'https://t.me/StuartExchange'}>Telegram Support</Link>
                             </li>
                         </ul>
                     </nav>

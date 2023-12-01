@@ -13,14 +13,14 @@ const navLinksLanguage = {
             name: "Home",
             href: "/en/"
         },
-        {
-            name: "Reviews",
-            href: "/en/#reviews"
-        },
-        {
-            name: "Who We Are?",
-            href: "/en/#about"
-        },
+        // {
+        //     name: "Reviews",
+        //     href: "/en/#reviews"
+        // },
+        // {
+        //     name: "Who We Are?",
+        //     href: "/en/#about"
+        // },
         {
             name: "Profile",
             href: "/en/profile"
@@ -31,14 +31,14 @@ const navLinksLanguage = {
             name: "Главная",
             href: "/ru/"
         },
-        {
-            name: "Отзывы",
-            href: "/ru/#reviews"
-        },
-        {
-            name: "Кто мы?",
-            href: "/ru/#about"
-        },
+        // {
+        //     name: "Отзывы",
+        //     href: "/ru/#reviews"
+        // },
+        // {
+        //     name: "Кто мы?",
+        //     href: "/ru/#about"
+        // },
         {
             name: "Личный кабинет",
             href: "/ru/profile"
@@ -103,7 +103,7 @@ export function Menu() {
                     </li>
                 ))}
                     <li>
-                        <Link onClick={()=>setOpen(false)} href={'/'} className="flex relative border border-main-blue gap-3 py-2 px-5 rounded-full">
+                        <Link onClick={()=>setOpen(false)} target="blank" href={'https://t.me/StuartExchange'} className="flex relative border border-main-blue gap-3 py-2 px-5 rounded-full">
                             <Image width={25} height={25} alt="tg" src={'/images/telegram.svg'}/>
                             Telegram Support
                         </Link>
