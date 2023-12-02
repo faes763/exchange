@@ -31,13 +31,23 @@ export default function History() {
             setLoading(false);
             const formatData = data.map((res)=>{
                 let date = new Date(res.createdAt);
-                const formattedDate = date.toISOString().split('T')[0].replaceAll("-",".");
+                const formattedDate = `${
+                    String(date.getDate()).padStart(2, "0")
+                  }.${
+                    String(date.getMonth() + 1).padStart(2, "0")
+                  }.${
+                    date.getFullYear()
+                  } ${
+                    String(date.getHours()).padStart(2, "0")
+                  }:${
+                    String(date.getMinutes()).padStart(2, "0")
+                  }`;
                 return {
                     ...res,
                     createdAt: formattedDate
                 };
             })
-            setData(formatData);
+            setData(formatData.reverse());
         }).catch((error)=>{
             console.log(error);
             // router.push('/auth');

@@ -172,7 +172,7 @@ export const Form = () => {
         >
             <div className=" flex justify-between flex-col gap-5">
                 <div className=" py-10 max-md:px-5 max-md:py-10 space-y-5 bg-main-blue rounded-2xl px-10">
-                    <label className=" text-xl text-white">{t('Отдаете')}</label>
+                    <label className=" text-xl text-white">{t('Отдаете')}:</label>
                     <div className="bg-white rounded-lg items-center flex px-5 gap-5 justify-between relative">
                         <input
                             className="outline-none w-full py-4 max-md:py-3"
@@ -231,7 +231,7 @@ export const Form = () => {
             <div className="h-full flex flex-col gap-5">
                 <div className=" h-full flex flex-col p-10 max-md:p-5 justify-center gap-10 rounded-2xl bg-main-blue">
                     <div  className=" space-y-2">
-                        <label className=" text-xl text-white">E-mail</label>
+                        <label className=" text-xl text-white">E-mail:</label>
                         <input
                             className="outline-none px-5 rounded-lg w-full py-4 max-md:py-3"
                             placeholder={t("Введите свой e-mail")}
@@ -245,7 +245,7 @@ export const Form = () => {
                         <ErrorView id="email" formik={formik}/>
                     </div>
                     <div className=" space-y-2">
-                        <label className=" text-xl text-white">{t("Логин в телеграме")}</label>
+                        <label className=" text-xl text-white">{t("Логин в телеграме")}:</label>
                         <input
                             className="outline-none px-5 rounded-lg w-full py-4 max-md:py-3"
                             placeholder={t("Введите логин телеграма")}
@@ -259,7 +259,7 @@ export const Form = () => {
                         <ErrorView id="telegram" formik={formik}/>
                     </div>
                     <div className=" space-y-2">
-                        <label className=" text-xl text-white">{t("Счёт получения")}</label>
+                        <label className=" text-xl text-white">{t("Счёт получения")}:</label>
                         <input
                             className="outline-none px-5 rounded-lg w-full py-4 max-md:py-3"
                             placeholder={t("Введите свой счет получения")}
