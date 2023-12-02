@@ -84,6 +84,7 @@ function Form({
         try {
             axiosCfg.post(url,values)
               .then((res)=>{
+                console.log(res);
                 localStorage.setItem('token',res.data.access_token);
                 axiosCfg.interceptors.request.use(
                     config => {
@@ -94,7 +95,7 @@ function Form({
                         return Promise.reject(error);
                     }
                 );
-                router.push("/profile")
+                router.push("/profile");
                 
               })
             .catch(error=>{

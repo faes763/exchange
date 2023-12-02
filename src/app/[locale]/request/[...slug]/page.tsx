@@ -79,7 +79,7 @@ export default function Request({
                     <p>{t("requestNumber")} #{data?.id}</p>
                 </div>
                 <div className="flex max-md:flex-col-reverse flex-col gap-8">
-                    <div className=" gap-5 max-lg:grid-cols-2 max-md:grid-cols-1 rounded-lg grid grid-cols-4">
+                    <div className={` gap-5 max-lg:grid-cols-2 max-md:grid-cols-1 rounded-lg grid ${data?.email ? " grid-cols-4" : "grid-cols-3"}`}>
                         <div className=" bg-main-gray rounded-lg py-5 px-8 space-y-4">
                             <p className=" text-[#5E5E5E]">{t("Отдаете")}:</p>
                             <p className=" text-lg font-semibold">{data?.amountReceived} {data?.currencyReceived}</p>
@@ -88,10 +88,13 @@ export default function Request({
                             <p className=" text-[#5E5E5E]">{t("Получаете")}</p>
                             <p className=" text-lg font-semibold">{data?.amountSent} {data?.currencySent} </p>
                         </div>
+                        {data?.email && (
                         <div className=" bg-main-gray py-5 rounded-lg px-8 space-y-4">
                             <p className=" text-[#5E5E5E]">E-mail:</p>
                             <p className=" break-words text-lg font-semibold">{data?.email}</p>
-                        </div>  
+                         </div>  
+                        )}
+                       
                         <div className=" bg-main-gray py-5 rounded-lg px-8 space-y-4">
                             <p className=" text-[#5E5E5E]">{t("Счёт получения")}</p>
                             <p className="  text-lg font-semibold">{data?.addressSent}</p>

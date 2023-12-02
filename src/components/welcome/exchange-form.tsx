@@ -87,7 +87,7 @@ export const Form = () => {
 
     const validationSchema = Yup.object().shape({
         telegram: Yup.string().required(t("Введите логин телеграма")),
-        email: Yup.string().email(t("Введите свой e-mail")).required(t("Введите свой e-mail")),
+        email: Yup.string().email(t("Введите свой e-mail")),
         send: Yup.string().required(t("Выберите валюту")),
         valueValuta: Yup.number().required(t("Введите число")).min(state.minValue,`${t("Минимальное число")}: ${Number(state.minValue)?.toFixed(6)}`).max(state.maxValue,`${t("Максимальное число")}: ${state.maxValue}`),
         receiver: Yup.string().required(t("Выберите валюту")),
@@ -105,7 +105,7 @@ export const Form = () => {
       validationSchema:  validationSchema,
       onSubmit: async (values) => {
         try {
-            axiosCfg.get(`/exchange/ticket/create?currency=${values.send}&amountSent=${received}&telegramId=${values.telegram}&email=${values.email}&amountReceived=${values.valueValuta}&addressSent=${values.account}&currencySent=${receiverValutas[receiverIndex]}`).then((res:any)=>{
+            axiosCfg.get(`/exchange/ticket/create?currency=${values.send}&amountSent=${received}&telegramId=${values.telegram}${values.email ? `&email=${values.email}` : ""}&amountReceived=${values.valueValuta}&addressSent=${values.account}&currencySent=${receiverValutas[receiverIndex]}`).then((res:any)=>{
                 router.push(`/request/${res.data.id}/${values.send}`)
             })
         } catch (error) {
@@ -130,7 +130,9 @@ export const Form = () => {
             setReceiver(+Number(res.oneValue)?.toFixed(numbFixed(receiverValutas[receiverIndex])));
         });
     },[sendIndex,receiverIndex]);
-    
+
+    const [showEmail,setShowEmail] = useState(false);
+
     useEffect(()=>{
         fetcherFetch('assets?flag=true').then(setSendValutas);
         fetcherFetch('assets?flag=false').then((res:string[])=>{
@@ -141,6 +143,7 @@ export const Form = () => {
         });
         const token = localStorage.getItem("token");
         if(token) {
+            setShowEmail(true);
             axiosCfg.interceptors.request.use(
                 config => {
                     config.headers.Authorization = `Bearer ${token}`;
@@ -230,7 +233,8 @@ export const Form = () => {
             </div>
             <div className="h-full flex flex-col gap-5">
                 <div className=" h-full flex flex-col p-10 max-md:p-5 justify-center gap-10 rounded-2xl bg-main-blue">
-                    <div  className=" space-y-2">
+                    {showEmail && (
+                    <div className=" space-y-2">
                         <label className=" text-xl text-white">E-mail:</label>
                         <input
                             className="outline-none px-5 rounded-lg w-full py-4 max-md:py-3"
@@ -243,7 +247,8 @@ export const Form = () => {
                             value={formik.values.email}
                         />
                         <ErrorView id="email" formik={formik}/>
-                    </div>
+                    </div>)}
+                    
                     <div className=" space-y-2">
                         <label className=" text-xl text-white">{t("Логин в телеграме")}:</label>
                         <input
