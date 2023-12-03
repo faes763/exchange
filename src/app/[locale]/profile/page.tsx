@@ -51,16 +51,18 @@ function Form({
       onSubmit: (values) => {
 
         try {
-            axiosCfg.get(`exchange/user/change?telegramId=${values.telegram}${values.password.length>0 ?`&password=${values.password}`:""}&email=${values.email}`)
-              .then((res)=>{
-                console.log(res);
-                toast.success(t("Данные успешно обновлены!"))
-                // router.push('/successfully');
-              })
-            .catch(error=>{
-                console.error(error);
-                alert("Произошла ошибка... \nПопробуйте позже")
-            })
+            if(values.password != "" || values.telegram != "") {
+                axiosCfg.get(`exchange/user/change?telegramId=${values.telegram}${values.password.length>0 ?`&password=${values.password}`:""}&email=${values.email}`)
+                .then((res)=>{
+                    console.log(res);
+                    toast.success(t("Данные успешно обновлены!"))
+                    // router.push('/successfully');
+                })
+                .catch(error=>{
+                    console.error(error);
+                    alert("Произошла ошибка... \nПопробуйте позже")
+                });
+            }
         } catch (error) {
             console.error(error);
             alert("Произошла ошибка... \n попробуйте позже")
@@ -80,6 +82,7 @@ function Form({
                 }
             );
             axiosCfg('exchange/user/info').then(res=>{
+                console.log(res);
                 formik.setFieldValue("email",res.data?.email);
                 formik.setFieldValue("telegram",res.data?.telegram || "");
                 // setShow(true);

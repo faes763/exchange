@@ -66,6 +66,9 @@
     "Максимальное число": "Max value",
     "Минимальное число": "Minimum number",
     "Данные успешно обновлены!": "Data updated successfully!",
+    "Ваш E-mail успешно подтвержден!": "Your email has been successfully confirmed!",
+    "На ваш E-mail была выслана ссылка, для верификации вашего профиля, перейдите по ней, чтобы активировать аккаунт":"A link has been sent to your email to verify your profile, follow it to activate your account",
+    "Подтвердите свою почту":"Confirm your email",
     "Index": {
         "menuContentStart": "Home",
         "menuContentReviews": "Reviews",

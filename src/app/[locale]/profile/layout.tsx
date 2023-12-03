@@ -71,6 +71,7 @@ export default function ProfileLayout({
             );
             axiosCfg('/exchange/user/tickets').then(res=>{
                 setShow(true);
+                console.log(res);
             }).catch((error)=>{
                 console.log(error);
                 router.push('/auth');

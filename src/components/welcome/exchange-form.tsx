@@ -107,7 +107,7 @@ export const Form = () => {
         try {
             axiosCfg.get(`/exchange/ticket/create?currency=${values.send}&amountSent=${received}&telegramId=${values.telegram}${values.email ? `&email=${values.email}` : ""}&amountReceived=${values.valueValuta}&addressSent=${values.account}&currencySent=${receiverValutas[receiverIndex]}`).then((res:any)=>{
                 router.push(`/request/${res.data.id}/${values.send}`)
-            })
+            });
         } catch (error) {
             console.error(error);
             alert("Произошла ошибка... \n попробуйте позже")
@@ -237,6 +237,7 @@ export const Form = () => {
                     <div className=" space-y-2">
                         <label className=" text-xl text-white">E-mail:</label>
                         <input
+                            readOnly
                             className="outline-none px-5 rounded-lg w-full py-4 max-md:py-3"
                             placeholder={t("Введите свой e-mail")}
                             id="email"

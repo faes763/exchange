@@ -2,7 +2,7 @@
 
 import { Switch } from "@headlessui/react";
 import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { startTransition,useRef, useEffect, useState } from "react";
 
 export function LanguageToggle() {
@@ -12,12 +12,14 @@ export function LanguageToggle() {
 
     const [enabled,setEnabled] = useState(locale=="ru" ? false : true);
     const pathname = usePathname();
+    const searchParams = useSearchParams();
     
     function changeLang(enable:boolean) {
         const name = pathname.replace(!enable ? "/en" : "/ru","");
+        const query = searchParams.toString();
 
         startTransition(() => {
-            router.replace(!enable ? `/ru/${name}` : `/en/${name}`,{scroll:false});    
+            router.replace(!enable ? `/ru/${name}${query ? `?${query}` : ""}` : `/en/${name}${query ? `?${query}` : ""}`,{scroll:false});    
         });
     }
 

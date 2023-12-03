@@ -84,19 +84,20 @@ function Form({
         try {
             axiosCfg.post(url,values)
               .then((res)=>{
-                console.log(res);
-                localStorage.setItem('token',res.data.access_token);
-                axiosCfg.interceptors.request.use(
-                    config => {
-                        config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
-                        return config;
-                    },
-                    error => {
-                        return Promise.reject(error);
-                    }
-                );
-                router.push("/profile");
-                
+                if(!isRegister) {
+                    localStorage.setItem('token',res.data.access_token);
+                    axiosCfg.interceptors.request.use(
+                        config => {
+                            config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+                            return config;
+                        },
+                        error => {
+                            return Promise.reject(error);
+                        }
+                    );
+                    router.push("/profile");
+                }
+                else router.push(`/confirm?email=${values.email}`);
               })
             .catch(error=>{
                 console.error(error);
