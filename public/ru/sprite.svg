@@ -26,4 +26,7 @@
   <symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="copy">
     <path d="M11.6667 9.33333H12.6667C13.4031 9.33333 14 8.7364 14 8V3.33333C14 2.59695 13.4031 2 12.6667 2H8C7.2636 2 6.66667 2.59695 6.66667 3.33333V4.33333M3.33333 6.66667H8C8.7364 6.66667 9.33333 7.2636 9.33333 8V12.6667C9.33333 13.4031 8.7364 14 8 14H3.33333C2.59695 14 2 13.4031 2 12.6667V8C2 7.2636 2.59695 6.66667 3.33333 6.66667Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
   </symbol>
+  <symbol fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" id="ver">
+    <path d="M11.6667 3.79166L5.25001 10.2083L2.33334 7.29166" stroke="#426AFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  </symbol>
 </svg>

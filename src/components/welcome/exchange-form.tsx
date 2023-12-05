@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import FormClearingBtc from "./FormClearingBtc";
 import { useLocale, useTranslations } from "next-intl";
 import { axiosCfg, fetcherFetch } from "@/core-axios";
+import { Sprite } from "@/tags/sprite";
 
 const tabLists = {
     ru: [
@@ -77,7 +78,7 @@ export const Form = () => {
     const router = useRouter();
     const t = useTranslations();
     const [state,setState] = useState<courseType>(course);
-    const [received,setReceiver] = useState<number | null>(null);
+    // const [received,setReceiver] = useState<number>(0);
 
     const [sendValutas, setSendValutas] = useState<string[]>([""]);
     const [sendIndex,setSendIndex] = useState<number>(0);
@@ -91,7 +92,11 @@ export const Form = () => {
         send: Yup.string().required(t("Выберите валюту")),
         valueValuta: Yup.number().required(t("Введите число")).min(state.minValue,`${t("Минимальное число")}: ${Number(state.minValue)?.toFixed(6)}`).max(state.maxValue,`${t("Максимальное число")}: ${state.maxValue}`),
         receiver: Yup.string().required(t("Выберите валюту")),
-        account: Yup.string().required(t("Счёт получения"))
+        account: Yup.string().required(t("Счёт получения")),
+        received: Yup.number().required(t("Введите число")),
+        isAgree: Yup.boolean()
+            .oneOf([true], 'Вы должны согласиться с условиями использования') // добавляем метод oneOf()
+            .required('Вы должны согласиться с условиями использования')
     });
     const formik = useFormik({
       initialValues: {
@@ -100,17 +105,19 @@ export const Form = () => {
         send: "",
         valueValuta: 1,
         receiver: "",
-        account: ""
+        account: "",
+        received: 0,
+        isAgree: false,
       },
       validationSchema:  validationSchema,
       onSubmit: async (values) => {
         try {
-            axiosCfg.get(`/exchange/ticket/create?currency=${values.send}&amountSent=${received}&telegramId=${values.telegram}${values.email ? `&email=${values.email}` : ""}&amountReceived=${values.valueValuta}&addressSent=${values.account}&currencySent=${receiverValutas[receiverIndex]}`).then((res:any)=>{
-                router.push(`/request/${res.data.id}/${values.send}`)
+            axiosCfg.get(`/exchange/ticket/create?currency=${values.send}&amountSent=${values.receiver}&telegramId=${values.telegram}${values.email ? `&email=${values.email}` : ""}&amountReceived=${values.valueValuta}&addressSent=${values.account}&currencySent=${receiverValutas[receiverIndex]}`).then((res:any)=>{
+                router.push(`/request/${res.data.id}/${values.send}`);
             });
         } catch (error) {
             console.error(error);
-            alert("Произошла ошибка... \n попробуйте позже")
+            alert("Произошла ошибка... \n попробуйте позже");
         }
       },
     });
@@ -127,7 +134,8 @@ export const Form = () => {
         fetcherFetch(`course/?from=${send || "BTC"}&to=${receiver || "USDTTRC20"}&amount=${formik.values.valueValuta}`).then((res:courseType)=>{
             setState(res);
             formik.setFieldValue('valueValuta',1);
-            setReceiver(+Number(res.oneValue)?.toFixed(numbFixed(receiverValutas[receiverIndex])));
+            formik.setFieldValue('receiver',+Number(res.oneValue)?.toFixed(numbFixed(receiverValutas[receiverIndex])));
+            // setReceiver(+Number(res.oneValue)?.toFixed(numbFixed(receiverValutas[receiverIndex])));
         });
     },[sendIndex,receiverIndex]);
 
@@ -163,7 +171,7 @@ export const Form = () => {
 
     function numbFixed(valuta:string) {
         if(["TCSBQRUB","CASHRUB2","CASHRUB","SBERRUB","SBPRUB"].includes(valuta)) return 0;
-        if(['USDTTRC20',"USDTERC20","DAI"].includes(valuta)) return 3
+        if(['USDTTRC20',"USDTERC20","DAIERC20"].includes(valuta)) return 3
         if(["XMR","DOGE","LTC",,"ETH","BTC"].includes(valuta)) return 6;
     }
 
@@ -184,7 +192,9 @@ export const Form = () => {
                             name="valueValuta"
                             type="number"
                             onChange={(e)=>{
-                                setReceiver(+(+e.target.value*state.oneValue).toFixed(numbFixed(receiverValutas[receiverIndex])));
+                                formik.setFieldValue('receiver',+(+e.target.value*state.oneValue).toFixed(numbFixed(receiverValutas[receiverIndex])));
+                                
+                                // setReceiver(+(+e.target.value*state.oneValue).toFixed(numbFixed(receiverValutas[receiverIndex])));
                                 formik.handleChange(e);
                             }}
                             onBlur={formik.handleBlur}
@@ -200,8 +210,29 @@ export const Form = () => {
 
                     {state && state.oneValue>0 && (
                     <div className="text-white md:text-lg">
+                        
                         <p>1 {sendValutas[sendIndex]} = {+(state?.oneValue).toFixed(numbFixed(receiverValutas[receiverIndex]))} {receiverValutas[receiverIndex].toLowerCase().includes('run') ? "RUB" : receiverValutas[receiverIndex]} </p>
                         <p>{t('Index.minimumExchange')}  {Number(state?.minValue || 0).toFixed(6)} {sendValutas[sendIndex]}</p>
+                        <div className={clsx(
+                            formik.errors.isAgree && "text-red-600",
+                            'flex items-center gap-2 '
+                        )}>
+                            <label htmlFor="isAgree" className={`${formik.values.isAgree ? "border-white bg-white" : "border-[rgba(209, 209, 214, 1)]"} transition-all border rounded`}>
+                                <Sprite name="ver" className="w-4 h-4"/>
+                            </label>
+                            <input 
+                                type="checkbox" 
+                                id="isAgree" 
+                                name="isAgree" 
+                                value={`${formik.values.isAgree}`}
+                                className={"hidden"}
+                                onChange={(e)=>{
+                                    console.log(e.target.checked);
+                                    formik.setFieldValue('isAgree',e.target.checked);
+                                }}
+                            />
+                            <label htmlFor="isAgree">{t("Согласен с правилами обмена и политики AML")}</label>
+                        </div>
                      </div>
                     )}
                 </div>
@@ -212,12 +243,18 @@ export const Form = () => {
                             className="outline-none"
                             placeholder="Введите число" 
                             type="number"
-                            onChange={(e)=>{
-                                setReceiver(+e.target.value);
-                                console.log(receiverValutas[receiverIndex]);
-                                formik.setFieldValue('valueValuta',+(+e.target.value/state.oneValue)?.toFixed(numbFixed(sendValutas[sendIndex])))
-                            }}
-                            value={`${receiverValutas[receiverIndex] == "TCSBQRUB" ? `${received}`.length>5 ? Math.floor((received || 0) / 1000) * 1000 : received : received}`} 
+                            readOnly
+                            name="receiver"
+                            id="receiver"
+                            // onChange={(e)=>{
+                            //     // setReceiver(parseInt(e.target.value));
+                            //     formik.setFieldValue('receiver',+e.target.value);
+                            //     formik.setFieldValue('valueValuta',+(+e.target.value/state.oneValue)?.toFixed(numbFixed(sendValutas[sendIndex])));
+                            //     formik.handleChange(e);
+                            // }}
+                            onBlur={formik.handleBlur}
+                            value={`${receiverValutas[receiverIndex] == "TCSBQRUB" ? `${formik.values.receiver}`.length>5 ? Math.floor((+formik.values.receiver || 0) / 1000) * 1000 : formik.values.receiver : formik.values.receiver}`}
+                            // `${receiverValutas[receiverIndex] == "TCSBQRUB" ? `${received}`.length>5 ? Math.floor((received || 0) / 1000) * 1000 : received : received}`
                         />
                         <div className="  relative">
                             <List name="receiver" select1={sendValutas[sendIndex]} select={receiverValutas[receiverIndex]} setSelect={setReceiverIndex} arrayList={receiverValutas || []}/>
@@ -332,12 +369,16 @@ function List({
         value={0}
         onChange={setSelect}
     >
-        <Listbox.Button className={' uppercase max-md:text-xs text-main-dark-gray '}>{(map as any)[select] != undefined? (map as any)[select] : select}</Listbox.Button>
-        <Listbox.Options className={' flex flex-col gap-2 px-5 top-full z-10 -right-5 rounded-b-xl absolute bg-white'}>
+        <Listbox.Button className={' uppercase flex-nowrap items-center gap-2 py-1.5 flex max-md:text-xs text-main-dark-gray '}>
+            <Image width={50} height={50} className="w-5 h-5" alt="" src={`/valuta/${select}.svg`}/>
+            {(map as any)[select] != undefined? (map as any)[select] : select}
+        </Listbox.Button>
+        <Listbox.Options className={' flex flex-col  pb-2 top-full z-10 -right-5 rounded-b-xl absolute bg-white'}>
             {arrayList.map((list,index) => (
             (select != list && list!=select1) && (
-                <Listbox.Option className={'whitespace-nowrap max-md:text-xs uppercase cursor-pointer text-main-dark-gray hover:text-black '} key={index+list} value={index}>
-                {(map as any)[list] != undefined? (map as any)[list] : list}
+                <Listbox.Option className={`whitespace-nowrap ${arrayList.length-1 != index && "border-b"} pl-5 pr-10 items-center gap-2 py-1.5 flex max-md:text-xs text-sm uppercase cursor-pointer text-main-dark-gray hover:text-black `} key={index+list} value={index}>
+                    <Image width={50} height={50} className="w-5 h-5" alt="" src={`/valuta/${list}.svg`}/>
+                    {(map as any)[list] != undefined? (map as any)[list] : list}
                 </Listbox.Option>
             )))}
         </Listbox.Options>
