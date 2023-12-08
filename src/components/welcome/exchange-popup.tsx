@@ -112,7 +112,6 @@ export function ExchangePopup() {
                                     });
                                 } else {
                                     ref.current = true;
-                                    
                                 }
                             }}
                         >
