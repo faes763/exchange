@@ -1,5 +1,6 @@
 import { About } from "./about";
 import { ExchangeForm } from "./exchange-form";
+import { ExchangePopup } from "./exchange-popup";
 import { How } from "./how";
 import { Reviews } from "./reviews";
 import { useTranslations } from "next-intl";
@@ -14,6 +15,7 @@ export function Welcome() {
                 <How/>
                 {/* <Reviews/> */}
                 <About/>
+                <ExchangePopup/>
             </div>
             <div className="coin coin_1"></div>
             <div className="coin coin_2"></div>

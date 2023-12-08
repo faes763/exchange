@@ -10,6 +10,7 @@ import FormClearingBtc from "./FormClearingBtc";
 import { useLocale, useTranslations } from "next-intl";
 import { axiosCfg, fetcherFetch } from "@/core-axios";
 import { Sprite } from "@/tags/sprite";
+import { useFormStore } from "@/store/form-popup-store";
 
 const tabLists = {
     ru: [
@@ -73,6 +74,27 @@ const course:courseType = {
     oneValue: 0,
 }
 
+{/* <div className={clsx(
+                            formik.errors.isAgree && "text-red-600",
+                            'flex items-center gap-2 '
+                        )}>
+                            <label htmlFor="isAgree" className={`${formik.values.isAgree ? "border-white bg-white" : "border-[rgba(209, 209, 214, 1)]"} transition-all border rounded`}>
+                                <Sprite name="ver" className="w-4 h-4"/>
+                            </label>
+                            <input 
+                                type="checkbox" 
+                                id="isAgree" 
+                                name="isAgree" 
+                                value={`${formik.values.isAgree}`}
+                                className={"hidden"}
+                                onChange={(e)=>{
+                                    console.log(e.target.checked);
+                                    formik.setFieldValue('isAgree',e.target.checked);
+                                }}
+                            />
+                            <label htmlFor="isAgree">{t("Согласен с правилами обмена и политики AML")}</label>
+                        </div> */}
+
 
 export const Form = () => {
     const router = useRouter();
@@ -86,6 +108,8 @@ export const Form = () => {
     const [receiverValutas, setReceiverValutas] = useState<string[]>([""]);
     const [receiverIndex,setReceiverIndex] = useState<number>(0);
 
+    const {set,open,setSent} = useFormStore();
+
     const validationSchema = Yup.object().shape({
         telegram: Yup.string().required(t("Введите логин телеграма")),
         email: Yup.string().email(t("Введите свой e-mail")),
@@ -94,9 +118,6 @@ export const Form = () => {
         receiver: Yup.string().required(t("Выберите валюту")),
         account: Yup.string().required(t("Счёт получения")),
         received: Yup.number().required(t("Введите число")),
-        isAgree: Yup.boolean()
-            .oneOf([true], 'Вы должны согласиться с условиями использования') // добавляем метод oneOf()
-            .required('Вы должны согласиться с условиями использования')
     });
     const formik = useFormik({
       initialValues: {
@@ -107,14 +128,13 @@ export const Form = () => {
         receiver: "",
         account: "",
         received: 0,
-        isAgree: false,
       },
       validationSchema:  validationSchema,
       onSubmit: async (values) => {
         try {
-            axiosCfg.get(`/exchange/ticket/create?currency=${values.send}&amountSent=${values.receiver}&telegramId=${values.telegram}${values.email ? `&email=${values.email}` : ""}&amountReceived=${values.valueValuta}&addressSent=${values.account}&currencySent=${receiverValutas[receiverIndex]}`).then((res:any)=>{
-                router.push(`/request/${res.data.id}/${values.send}`);
-            });
+            setSent(receiverValutas[receiverIndex])
+            set(values);
+            open();
         } catch (error) {
             console.error(error);
             alert("Произошла ошибка... \n попробуйте позже");
@@ -213,26 +233,6 @@ export const Form = () => {
                         
                         <p>1 {sendValutas[sendIndex]} = {+(state?.oneValue).toFixed(numbFixed(receiverValutas[receiverIndex]))} {receiverValutas[receiverIndex].toLowerCase().includes('run') ? "RUB" : receiverValutas[receiverIndex]} </p>
                         <p>{t('Index.minimumExchange')}  {Number(state?.minValue || 0).toFixed(6)} {sendValutas[sendIndex]}</p>
-                        <div className={clsx(
-                            formik.errors.isAgree && "text-red-600",
-                            'flex items-center gap-2 '
-                        )}>
-                            <label htmlFor="isAgree" className={`${formik.values.isAgree ? "border-white bg-white" : "border-[rgba(209, 209, 214, 1)]"} transition-all border rounded`}>
-                                <Sprite name="ver" className="w-4 h-4"/>
-                            </label>
-                            <input 
-                                type="checkbox" 
-                                id="isAgree" 
-                                name="isAgree" 
-                                value={`${formik.values.isAgree}`}
-                                className={"hidden"}
-                                onChange={(e)=>{
-                                    console.log(e.target.checked);
-                                    formik.setFieldValue('isAgree',e.target.checked);
-                                }}
-                            />
-                            <label htmlFor="isAgree">{t("Согласен с правилами обмена и политики AML")}</label>
-                        </div>
                      </div>
                     )}
                 </div>
