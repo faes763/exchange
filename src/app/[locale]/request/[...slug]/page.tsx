@@ -76,7 +76,7 @@ export default function Request({
            <div className=" container">
                 <div className=" max-md:flex-col items-center flex mb-8 justify-between">
                     <h1 className=" text-h1 text-center font-semibold">{t("yourRequestAccepted")}</h1>
-                    <p>{t("requestNumber")} #{data?.id}</p>
+                    <p className="text-center">{t("requestNumber")} #{data?.id}</p>
                 </div>
                 <div className="flex max-md:flex-col-reverse flex-col gap-8">
                     <div className={` gap-5 max-lg:grid-cols-2 max-md:grid-cols-1 rounded-lg grid ${data?.email ? " grid-cols-4" : "grid-cols-3"}`}>
@@ -177,8 +177,8 @@ function WaitSuccess({
                                 navigator.clipboard.writeText(addressReceived);
                                 setClick("text-green-400")
                                 setTimeout(()=>{setClick('text-white')},1500)
-                        }} className={`${click}  flex items-center gap-2 text-lg`}> 
-                            <span className="w-full break-words">{addressReceived}</span>
+                        }} className={`${click}  flex items-center max-md:gap-1 gap-2 text-lg`}> 
+                            <span className="w-full max-md:max-w-[90%] break-words">{addressReceived}</span>
                             <Sprite  name="copy" className={`w-5  h-5`}/>
                         </p>
                     </div>

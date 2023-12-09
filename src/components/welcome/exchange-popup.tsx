@@ -52,7 +52,7 @@ export function ExchangePopup() {
                         leaveFrom="opacity-100 scale-100"
                         leaveTo="opacity-0 scale-95"
                     >
-                        <Dialog.Panel className="w-full space-y-5 max-w-md text-center transform overflow-hidden rounded-2xl bg-white p-6 align-middle shadow-xl transition-all">
+                        <Dialog.Panel className="w-full space-y-5 max-w-md text-center transform overflow-hidden rounded-2xl bg-white px-6 py-8 md:py-10 align-middle shadow-xl transition-all">
                         <Dialog.Title
                             as="h3"
                             className="text-h2 text-center font-bold  text-gray-900"
