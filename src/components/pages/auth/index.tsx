@@ -1,24 +1,22 @@
 'use client'
 import { axiosCfg } from "@/core-axios";
 import { useFormik } from "formik";
-import Link from "next/link"
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import * as Yup from "yup";
 import 'react-toastify/dist/ReactToastify.css';
-import { AxiosError } from "axios";
-import { Metadata } from "next";
-
+import { useTranslations } from "next-intl";
 
 
 export function Auth() {
     const [isRegister,set] = useState(false);
-    const notify = () => toast("Wow so easy!");
+    const t = useTranslations();
+
     return(
         <main className="min-h-screen">
             <div className=" gap-16 container flex flex-col items-center">
-                <p className=" text-3xl text-center font-semibold">{isRegister ? "Регистрация" : "Авторизация"}</p>
+                <p className=" text-3xl text-center font-semibold">{t(isRegister ? "Зарегистрироваться" : "Авторизация")}</p>
                 <Form isRegister={isRegister} setRegister={set}/>
             </div>
             <ToastContainer
@@ -132,6 +130,7 @@ function Form({
     });
 
     
+    const t = useTranslations();
 
 
     return(
@@ -156,10 +155,10 @@ function Form({
                 ) : null}
             </div>
             <div className="w-full space-y-2">
-                <label className=" text-[#6A6A6A]" htmlFor="password">Пароль</label>
+                <label className=" text-[#6A6A6A]" htmlFor="password">{t("Пароль")}</label>
                 <input
                     className={`w-full border outline-none bg-transparent border-main-blue px-5 py-3 rounded-lg`}
-                    placeholder="Введите свой пароль"
+                    placeholder={t("Введите свой пароль")}
                     id="password"
                     name="password"
                     type="password"
@@ -173,10 +172,10 @@ function Form({
             </div>
             {isRegister && (
             <div className="w-full space-y-2">
-                <label className=" text-[#6A6A6A]" htmlFor="password">Повторите пароль</label>
+                <label className=" text-[#6A6A6A]" htmlFor="password">{t("Повторите пароль")}</label>
                 <input
                     className={`w-full border outline-none bg-transparent border-main-blue px-5 py-3 rounded-lg`}
-                    placeholder="Введите пароль повторно"
+                    placeholder={t("Введите пароль повторно")}
                     id="repeatPassword"
                     name="repeatPassword"
                     type="password"
@@ -193,11 +192,11 @@ function Form({
                 type="submit" 
                 className=" bg-main-blue text-white text-center w-full py-3 rounded-lg "
             >
-                Войти
+                {t(isRegister ? "Войти" : "Зарегистрироваться")}
             </button>
             <div onClick={()=>setRegister(prev=>!prev)} className="flex gap-1 max-md:flex-col items-center cursor-pointer justify-center text-sm">
-                {isRegister ? "Уже зарегистрированы?" : " Еще не зарегистрированы? "}
-                <p  className="  text-main-blue">{isRegister ? " Войти" : " Зарегистрироваться"}</p>
+                {t(isRegister ? "Уже зарегистрированы?" : "Еще не зарегистрированы?")}
+                <p  className="  text-main-blue">{t(isRegister ? "Войти" : "Зарегистрироваться")}</p>
             </div>
             
         </form>
