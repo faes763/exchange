@@ -9,6 +9,10 @@ const navLinks = {
             name: "Главная",
             href: "ru/"
         },
+        {
+            name:"Правила",
+            href:"/ru/policy"
+        },
         // {
         //     name: "Отзывы",
         //     href: "ru/#reviews"
@@ -22,6 +26,10 @@ const navLinks = {
         {
             "name": "Home",
             "href": "en/"
+        },
+        {
+            name:"Rules",
+            href:"/en/policy"
         },
         // {
         //     "name": "Reviews",

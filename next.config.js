@@ -10,8 +10,8 @@ const nextConfig = {
         optimizePackageImports: ['@headlessui/react'],
     },
     env: {
-      BASE_URL: "https://stuartexchange.online:3000",
-      BASE_URL_MONITORING: "https://stuartexchange.online:3050"
+      BASE_URL: "https://dev.stuart.exchange/",
+      BASE_URL_MONITORING: "https://swag.stuart.exchange/"
     }
 }
 

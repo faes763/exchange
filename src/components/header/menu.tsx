@@ -13,6 +13,10 @@ const navLinksLanguage = {
             name: "Home",
             href: "/en/"
         },
+        {
+            name:"Rules",
+            href:"/en/policy"
+        },
         // {
         //     name: "Reviews",
         //     href: "/en/#reviews"
@@ -30,6 +34,10 @@ const navLinksLanguage = {
         {
             name: "Главная",
             href: "/ru/"
+        },
+        {
+            name:"Правила",
+            href:"/ru/policy"
         },
         // {
         //     name: "Отзывы",
