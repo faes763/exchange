@@ -73,7 +73,7 @@
     "Оплатите заявку в течении": "Pay the request within",
     "Данная операция производится оператором в ручном режиме и занимает от 5 до 60 минут": "Payment is made manually by the operator and takes from 5 to 60 minutes",
     "Связь": "The exchange is made in a semi-automatic mode, the payment is made manually and can take from 5 to 60 minutes.",
-    "Счёт получения":"Receipt Зарегистрироваться",
+    "Счёт получения":"Receipt account",
     "Мы получили платеж, находимся в процессе выплаты" : "We have received payment and are in the process of payment",
     "Введите свой счет получения": "Enter your receipt account",
     "Войти":"Auth",

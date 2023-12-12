@@ -192,7 +192,7 @@ function Form({
                 type="submit" 
                 className=" bg-main-blue text-white text-center w-full py-3 rounded-lg "
             >
-                {t(isRegister ? "Войти" : "Зарегистрироваться")}
+                {t(!isRegister ? "Войти" : "Зарегистрироваться")}
             </button>
             <div onClick={()=>setRegister(prev=>!prev)} className="flex gap-1 max-md:flex-col items-center cursor-pointer justify-center text-sm">
                 {t(isRegister ? "Уже зарегистрированы?" : "Еще не зарегистрированы?")}

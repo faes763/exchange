@@ -4,12 +4,11 @@ import clsx from "clsx";
 import { useFormik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import * as Yup from "yup";
 import FormClearingBtc from "./FormClearingBtc";
 import { useLocale, useTranslations } from "next-intl";
 import { axiosCfg, fetcherFetch } from "@/core-axios";
-import { Sprite } from "@/tags/sprite";
 import { useFormStore } from "@/store/form-popup-store";
 
 const tabLists = {
@@ -36,7 +35,7 @@ export function ExchangeForm() {
                             className={({ selected }) =>
                                 clsx(
                                     selected ? " bg-main-blue text-white" : " text-black bg-white border border-main-blue",
-                                    " px-10 py-3  rounded-xl font-semibold tracking-wide"
+                                    " px-10 py-3 text-xl max-md:text-base rounded-xl font-semibold tracking-wide"
                                 )
                             }
                             key={list + index}
@@ -74,33 +73,11 @@ const course:courseType = {
     oneValue: 0,
 }
 
-{/* <div className={clsx(
-                            formik.errors.isAgree && "text-red-600",
-                            'flex items-center gap-2 '
-                        )}>
-                            <label htmlFor="isAgree" className={`${formik.values.isAgree ? "border-white bg-white" : "border-[rgba(209, 209, 214, 1)]"} transition-all border rounded`}>
-                                <Sprite name="ver" className="w-4 h-4"/>
-                            </label>
-                            <input 
-                                type="checkbox" 
-                                id="isAgree" 
-                                name="isAgree" 
-                                value={`${formik.values.isAgree}`}
-                                className={"hidden"}
-                                onChange={(e)=>{
-                                    console.log(e.target.checked);
-                                    formik.setFieldValue('isAgree',e.target.checked);
-                                }}
-                            />
-                            <label htmlFor="isAgree">{t("Согласен с правилами обмена и политики AML")}</label>
-                        </div> */}
-
 
 export const Form = () => {
     const router = useRouter();
     const t = useTranslations();
     const [state,setState] = useState<courseType>(course);
-    // const [received,setReceiver] = useState<number>(0);
 
     const [sendValutas, setSendValutas] = useState<string[]>([""]);
     const [sendIndex,setSendIndex] = useState<number>(0);
@@ -202,12 +179,12 @@ export const Form = () => {
             onSubmit={formik.handleSubmit}
         >
             <div className=" flex justify-between flex-col gap-5">
-                <div className=" py-10 max-md:px-5 max-md:py-10 space-y-5 bg-main-blue rounded-2xl px-10">
+                <div className=" py-10 max-md:px-5 max-md:py-10 space-y-2 bg-main-blue rounded-2xl px-10">
                     <label className=" text-xl text-white">{t('Отдаете')}:</label>
                     <div className="bg-white rounded-lg items-center flex px-5 gap-5 justify-between relative">
                         <input
                             className="outline-none w-full py-4 max-md:py-3"
-                            placeholder="Введите число"
+                            placeholder={t("Введите число")}
                             id="valueValuta"
                             name="valueValuta"
                             type="number"
@@ -241,7 +218,7 @@ export const Form = () => {
                     <div className="bg-white py-4 max-md:py-3 rounded-lg items-center flex px-5 gap-5 justify-between relative">
                         <input
                             className="outline-none"
-                            placeholder="Введите число" 
+                            placeholder={t("Введите число")}
                             type="number"
                             readOnly
                             name="receiver"
