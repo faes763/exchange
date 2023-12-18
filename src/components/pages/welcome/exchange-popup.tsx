@@ -99,7 +99,7 @@ export function ExchangePopup() {
                             onClick={()=>{
                                 if(isAgree && values) {
                                     setLoad(true);
-                                    axiosCfg.get(`/exchange/ticket/create?currency=${values.send}&amountSent=${values.receiver}&telegramId=${values.telegram}${values.email ? `&email=${values.email}` : ""}&amountReceived=${values.valueValuta}&addressSent=${values.account}&currencySent=${currencySent}`).then((res:any)=>{
+                                    axiosCfg.get(`/exchange/ticket/create?currency=${values.send}&amountSent=${values.valueValuta}&telegramId=${values.telegram}${values.email ? `&email=${values.email}` : ""}&amountReceived=${values.receiver}&addressSent=${values.account}&currencySent=${currencySent}`).then((res:any)=>{
                                         close();
                                         router.push(`/request/${res.data.id}/${values.send}`);
                                     })
