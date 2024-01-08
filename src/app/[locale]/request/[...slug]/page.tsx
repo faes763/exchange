@@ -85,7 +85,7 @@ export default function Request({
                             <p className=" text-lg font-semibold">{data?.amountReceived} {data?.currencyReceived}</p>
                         </div>
                         <div className=" bg-main-gray py-5 rounded-lg px-8 space-y-4">
-                            <p className=" text-[#5E5E5E]">{t("Получаете")}</p>
+                            <p className=" text-[#5E5E5E]">{t("Получаете")}:</p>
                             <p className=" text-lg font-semibold">{data?.amountSent} {data?.currencySent} </p>
                         </div>
                         {data?.email && (
@@ -96,7 +96,7 @@ export default function Request({
                         )}
                        
                         <div className=" bg-main-gray py-5 rounded-lg px-8 space-y-4">
-                            <p className=" text-[#5E5E5E]">{t("Счёт получения")}</p>
+                            <p className=" text-[#5E5E5E]">{t("Счёт получения")}:</p>
                             <p className="  text-lg font-semibold">{data?.addressSent}</p>
                         </div>
                     </div>

@@ -13,12 +13,12 @@ import { useFormStore } from "@/store/form-popup-store";
 
 const tabLists = {
     ru: [
-        "Обмен",
-        "Миксер"
+        // "Обмен",
+        // "Миксер"
     ],
     en: [
-        "Swap",
-        "Mix"
+        // "Swap",
+        // "Mix"
     ]
 }
 
