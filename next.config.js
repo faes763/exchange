@@ -10,8 +10,8 @@ const nextConfig = {
         optimizePackageImports: ['@headlessui/react'],
     },
     env: {
-      BASE_URL: "http://localhost:4444/",
-      BASE_URL_MONITORING: "http://localhost:4445/"
+        BASE_URL: "https://dev.stuart.exchange/",
+        BASE_URL_MONITORING: "https://swag.stuart.exchange/"
     }
 }
 
