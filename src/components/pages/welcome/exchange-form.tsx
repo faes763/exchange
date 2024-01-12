@@ -124,7 +124,6 @@ export const Form = () => {
     useEffect(()=>{
         const send = sendValutas[sendIndex];
         const receiver = receiverValutas[receiverIndex];
-
         formik.setFieldValue('send',send);
         formik.setFieldValue('receiver',receiver);
 
@@ -134,6 +133,19 @@ export const Form = () => {
             formik.setFieldValue('receiver',+Number(res.oneValue)?.toFixed(numbFixed(receiverValutas[receiverIndex])));
             // setReceiver(+Number(res.oneValue)?.toFixed(numbFixed(receiverValutas[receiverIndex])));
         });
+
+        const interval = setInterval(()=>{
+            fetcherFetch(`course/?from=${send || "BTC"}&to=${receiver || "USDTTRC20"}&amount=${formik.values.valueValuta}`).then((res:courseType)=>{
+                setState(res);
+                formik.setFieldValue('valueValuta',1);
+                formik.setFieldValue('receiver',+Number(res.oneValue)?.toFixed(numbFixed(receiverValutas[receiverIndex])));
+            });
+        },1000 * 120);
+
+        return(()=>{
+            clearInterval(interval)
+        })
+
     },[sendIndex,receiverIndex]);
 
     const [showEmail,setShowEmail] = useState(false);
@@ -141,8 +153,10 @@ export const Form = () => {
     useEffect(()=>{
         fetcherFetch('assets?flag=true').then(setSendValutas);
         fetcherFetch('assets?flag=false').then((res:string[])=>{
-            setReceiverValutas(res?.reverse());
-            res.find((vault,index)=>{
+            const data = res.filter(el=>el!="TCSBQRUB");
+            setReceiverValutas(data?.reverse());
+
+            data.find((vault,index)=>{
                 if(vault == "USDTTRC20") setReceiverIndex(index);
             });
         });
@@ -167,8 +181,9 @@ export const Form = () => {
     },[]);
 
     function numbFixed(valuta:string) {
-        if(["TCSBQRUB","CASHRUB2","CASHRUB","SBERRUB","SBPRUB"].includes(valuta)) return 0;
-        if(['USDTTRC20',"USDTERC20","DAIERC20"].includes(valuta)) return 3
+        if(["TCSBQRUB","CASHRUB2","CASHRUB"].includes(valuta)) return 0;
+        if(["SBERRUB","SBPRUB"]) return 2;
+        if(['USDTTRC20',"USDTERC20","DAIERC20"].includes(valuta)) return 3; 
         if(["XMR","DOGE","LTC",,"ETH","BTC"].includes(valuta)) return 6;
     }
 
