@@ -10,7 +10,7 @@ const about = {
         },
         {
             course : "Стабильный курс",
-            text: "Наш обменник работает по API CoinGecko - курс фиксируется на момент сделки, что дает прозрачность обмена и без навязывания дополнительных комиссий.",
+            text: "Наш обменник работает по API CoinGecko и Garantex - курс фиксируется на момент сделки, что дает прозрачность обмена и без навязывания дополнительных комиссий.",
             sprite: "/images/rate.png"  
         },
         {
@@ -27,7 +27,7 @@ const about = {
         },
         {
             "course": "Stable Exchange Rate",
-            "text": "Our exchange works with the CoinGecko API - the rate is fixed at the time of the transaction, providing transparency and avoiding additional fees.",
+            "text": "Our exchange works with the CoinGecko API and Garantex - the rate is fixed at the time of the transaction, providing transparency and avoiding additional fees.",
             "sprite": "/images/rate.png"
         },
         {
