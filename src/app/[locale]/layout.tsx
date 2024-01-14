@@ -29,7 +29,18 @@ export default function LocaleLayout({children, params: {locale}}:{
 
     return (
     <html lang={locale}>
+      <head>
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7W8ESW1TX"></script>
+          <script id='google-stat' dangerouslySetInnerHTML={{__html:`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-D7W8ESW1TX');`}}/>
+      </head>
       <body className={`  ${Nunito.className}`}>
+      
+        
         <Script src="//code.jivo.ru/widget/sosOAdI1ha" async></Script>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Header/>
