@@ -64,9 +64,11 @@ export function Footer() {
                                 <Image className="w-5 h-5" width={25} height={25} alt="" src={'/images/lamp.svg'}/>
                                 <p>StuartExchange@0nl1ne.at</p>
                             </li>
-                            <li className="flex border border-main-blue gap-3 items-center py-2 px-5 rounded-full">
-                                <Image width={25} height={25} alt="tg" src={'/images/telegram.svg'}/>
-                                <Link target="blank" href={'https://t.me/StuartExchange'}>Telegram Support</Link>
+                            <li>
+                                <Link target="_blank" href={'https://t.me/StuartEx_bot'} className="flex relative border border-main-blue gap-3 py-2 px-5 rounded-full">
+                                    <Image width={25} height={25} alt="tg" src={'/images/telegram.svg'}/>
+                                    Telegram Bot
+                                </Link>
                             </li>
                         </ul>
                     </nav>

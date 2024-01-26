@@ -39,8 +39,6 @@ export default function LocaleLayout({children, params: {locale}}:{
           gtag('config', 'G-D7W8ESW1TX');`}}/>
       </head>
       <body className={`  ${Nunito.className}`}>
-      
-        
         <Script src="//code.jivo.ru/widget/sosOAdI1ha" async></Script>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Header/>

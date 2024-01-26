@@ -4,6 +4,7 @@ import '../styles/globals.css'
 export const metadata: Metadata = {
   title: 'Stuart Exchange',
   description: 'Stuart Exchange',
+  keywords: "обменник, крипта, криптообменник, обменять крипту, стюарт обменник, стюарт литтл, обмен валют, обмен крипты"
 }
 
 export default function RootLayout({
@@ -11,5 +12,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return children
+  return children 
 }

@@ -1,6 +1,6 @@
 import { About } from "./about";
-import { ExchangeForm } from "./exchange-form";
-import { ExchangePopup } from "./exchange-popup";
+import { ExchangeForm } from "./exchange/exchange-form";
+import { ExchangePopup } from "./exchange/exchange-popup";
 import { How } from "./how";
 import { Reviews } from "./reviews";
 import { useTranslations } from "next-intl";

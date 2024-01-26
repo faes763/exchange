@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import * as Yup from "yup";
-import FormClearingBtc from "./FormClearingBtc";
+import FormClearingBtc from "../FormClearingBtc";
 import { useLocale, useTranslations } from "next-intl";
 import { axiosCfg, fetcherFetch } from "@/core-axios";
 import { useFormStore } from "@/store/form-popup-store";
@@ -232,18 +232,12 @@ export const Form = () => {
                     <p className=" text-white  text-xl">{t('Получайте')}:</p>
                     <div className="bg-white py-4 max-md:py-3 rounded-lg items-center flex px-5 gap-5 justify-between relative">
                         <input
-                            className="outline-none"
+                            className="outline-none w-full py-4 max-md:py-3"
                             placeholder={t("Введите число")}
                             type="number"
                             readOnly
                             name="receiver"
                             id="receiver"
-                            // onChange={(e)=>{
-                            //     // setReceiver(parseInt(e.target.value));
-                            //     formik.setFieldValue('receiver',+e.target.value);
-                            //     formik.setFieldValue('valueValuta',+(+e.target.value/state.oneValue)?.toFixed(numbFixed(sendValutas[sendIndex])));
-                            //     formik.handleChange(e);
-                            // }}
                             onBlur={formik.handleBlur}
                             value={`${receiverValutas[receiverIndex] == "TCSBQRUB" ? `${formik.values.receiver}`.length>5 ? Math.floor((+formik.values.receiver || 0) / 1000) * 1000 : formik.values.receiver : formik.values.receiver}`}
                             // `${receiverValutas[receiverIndex] == "TCSBQRUB" ? `${received}`.length>5 ? Math.floor((received || 0) / 1000) * 1000 : received : received}`
