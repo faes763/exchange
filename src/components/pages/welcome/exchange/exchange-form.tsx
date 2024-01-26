@@ -230,7 +230,7 @@ export const Form = () => {
                 </div>
                 <div className=" p-10 max-md:p-5 space-y-2  bg-main-blue rounded-2xl">
                     <p className=" text-white  text-xl">{t('Получайте')}:</p>
-                    <div className="bg-white py-4 max-md:py-3 rounded-lg items-center flex px-5 gap-5 justify-between relative">
+                    <div className="bg-white rounded-lg items-center flex px-5 gap-5 justify-between relative">
                         <input
                             className="outline-none w-full py-4 max-md:py-3"
                             placeholder={t("Введите число")}
