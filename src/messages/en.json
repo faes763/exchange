@@ -17,13 +17,13 @@
         }
     },
     "nal": {
-        "text": "How to change the exchange to",
+        "text": "How to exchange for",
         "sub": "cash and Tinkoff QR?",
-        "desc": "To make an exchange for Cash, Tinkoff QR or other coins that are not on the site - contact us via the Telegram messenger to fill out an application"
+        "desc": "To exchange for cash, Tinkoff QR, or other coins that are not listed on the website, contact us via the «Telegram» messenger to place a request."
     },
     "reviews": {
         "text": "Reviews ",
-        "sub" : "Who We Are?"
+        "sub" : "Why us?"
     },
     "Внимательно проверяйте сумму": "Carefully check the amount you send to our wallet; if it subsequently turns out to be less than specified, the application will be considered unpaid.",
     "В случае, если транзакция":"If a transaction is identified as risky, we may suspend the exchange operation and ask you to complete an identification procedure.",
@@ -72,11 +72,11 @@
     "Ваша заявка успешно выполнена!": "Your request has been successfully completed!",
     "Оплатите заявку в течении": "Pay the request within",
     "Данная операция производится оператором в ручном режиме и занимает от 5 до 60 минут": "Payment is made manually by the operator and takes from 5 to 60 minutes",
-    "Связь": "The exchange is made in a semi-automatic mode, the payment is made manually and can take from 5 to 60 minutes.",
-    "Счёт получения":"Receipt account",
+    "Связь": "The exchange is conducted in semi-automatic mode, and the payment is made manually, which may take from 5 to 60 minutes.",
+    "Счёт получения":"Receiving account",
     "Мы получили платеж, находимся в процессе выплаты" : "We have received payment and are in the process of payment",
-    "Введите свой счет получения": "Enter your receipt account",
-    "Войти":"Auth",
+    "Введите свой счет получения": "Enter your receiving account",
+    "Войти":"Log In",
     "Пожалуйста подождите" : "Please wait",
     "В случае возникновении каких-либо вопросов или если ваши деньги не дошли до нас, напишите в техническую поддержку @StuartExchange": "If you have any questions or if your coins have not reached us, write to the online chat on the website or in our telegram.",
     "Ваша заявка истекла!": "Your application has expired!",
@@ -132,7 +132,7 @@
         "additionalAddressPlaceholder": "Additional address (optional)",
         "errorFillFields": "Error. Fill in all fields",
         "youGive": "You give:",
-        "minimumExchange": "Minimum exchange amount from",
+        "minimumExchange": "Minimum exchange amount:",
         "telegramUsername": "Telegram username:",
         "youReceive": "You receive:",
         "contactForExchange": "We will contact you within 3 minutes to complete the exchange. The exact exchange rate will be sent after contacting the operator",
