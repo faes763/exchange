@@ -92,10 +92,11 @@ export function Menu() {
                         )} width={30} height={4} rx={2}/>
                 </svg>
             </div>
-            <ul className={clsx(
-                " max-lg:absolute w-full left-0 max-lg:bg-white max-xl:gap-8 max-lg:translate-y-7 max-lg:py-5 max-lg:flex-col flex items-center gap-14",
-                !open && "max-lg:hidden"
-            )}>
+            <div>
+                <ul className={clsx(
+                    " max-lg:absolute w-full left-0 max-lg:bg-white max-xl:gap-8 max-lg:translate-y-7 max-lg:py-5 max-lg:flex-col flex items-center gap-14",
+                    !open && "max-lg:hidden"
+                )}>
                 {navLinksLanguage[locale].map((link,index)=>(
                     <li 
                         className="relative" 
@@ -110,17 +111,20 @@ export function Menu() {
                         </Link>
                     </li>
                 ))}
-                    <li className="flex border border-black items-center gap-3 py-2 px-5 rounded-full">
-                        <Image className="w-5 h-5" width={25} height={25} alt="" src={'/images/lamp.svg'}/>
-                        <p>StuartExchange@0nl1ne.at</p>
-                    </li>
-                    <li>
-                        <Link onClick={()=>setOpen(false)} target="blank" href={'https://t.me/StuartEx_bot'} className="flex relative border border-main-blue gap-3 py-2 px-5 rounded-full">
-                            <Image width={25} height={25} alt="tg" src={'/images/telegram.svg'}/>
-                            Telegram Bot
-                        </Link>
-                    </li>
-            </ul>
+                <li className="flex gap-5 max-lg:flex-col reverse items-center">
+                <div className="flex border border-black items-center gap-3 py-2 px-5 rounded-full">
+                    <Image className="w-5 h-5" width={25} height={25} alt="" src={'/images/lamp.svg'}/>
+                    <p>StuartExchange@0nl1ne.at</p>
+                </div>
+                <div>
+                    <Link onClick={()=>setOpen(false)} target="blank" href={'https://t.me/StuartEx_bot'} className="flex relative border border-main-blue gap-3 py-2 px-5 rounded-full">
+                        <Image width={25} height={25} alt="tg" src={'/images/telegram.svg'}/>
+                        Telegram Bot
+                    </Link>
+                </div>
+                </li>
+                </ul>
+            </div>
         </nav>
     )
 }

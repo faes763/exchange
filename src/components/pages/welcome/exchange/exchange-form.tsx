@@ -355,7 +355,7 @@ function List({
         value={0}
         onChange={setSelect}
     >
-        <Listbox.Button className={' uppercase flex-nowrap items-center gap-2 py-1.5 flex max-md:text-xs text-main-dark-gray '}>
+        <Listbox.Button className={' w-[max-content] uppercase flex-nowrap items-center gap-2 py-1.5 flex max-md:text-xs text-main-dark-gray '}>
             {select && <Image width={50} height={50} className="w-5 h-5" alt="" src={`/valuta/${select}.svg`}/>}
             {(map as any)[select] != undefined? (map as any)[select] : select}
         </Listbox.Button>
