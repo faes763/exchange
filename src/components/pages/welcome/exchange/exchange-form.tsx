@@ -88,12 +88,12 @@ export const Form = () => {
     const {set,open,setSent} = useFormStore();
 
     const validationSchema = Yup.object().shape({
-        telegram: Yup.string().required(t("Введите логин телеграма")),
+        telegram: Yup.string().required(t("Введите логин телеграма")).max(50,t("50 символов максимум")),
         email: Yup.string().email(t("Введите свой e-mail")),
         send: Yup.string().required(t("Выберите валюту")),
         valueValuta: Yup.number().required(t("Введите число")).min(state.minValue,`${t("Минимальное число")}: ${Number(state.minValue)?.toFixed(6)}`).max(state.maxValue,`${t("Максимальное число")}: ${state.maxValue}`),
         receiver: Yup.string().required(t("Выберите валюту")),
-        account: Yup.string().required(t("Счёт получения")),
+        account: Yup.string().required(t("Счёт получения")).max(50,t("50 символов максимум")),
         received: Yup.number().required(t("Введите число")),
     });
     const formik = useFormik({
