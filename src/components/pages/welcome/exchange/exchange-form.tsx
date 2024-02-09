@@ -93,7 +93,7 @@ export const Form = () => {
         send: Yup.string().required(t("Выберите валюту")),
         valueValuta: Yup.number().required(t("Введите число")).min(state.minValue,`${t("Минимальное число")}: ${Number(state.minValue)?.toFixed(6)}`).max(state.maxValue,`${t("Максимальное число")}: ${state.maxValue}`),
         receiver: Yup.string().required(t("Выберите валюту")),
-        account: Yup.string().required(t("Счёт получения")).max(50,t("50 символов максимум")),
+        account: Yup.string().required(t("Счёт получения")),
         received: Yup.number().required(t("Введите число")),
     });
     const formik = useFormik({
@@ -119,13 +119,37 @@ export const Form = () => {
       },
     });
 
+    const [translateAccount,setTranslateAccount] = useState<string>("Счёт получения");
+    const [placeholderAccount,setPlaceholderAccount] = useState<string>("Введите свой счет получения");
+
+
     
+    function isSBERReceiver(receiver: string) {
+        switch(receiver) {
+            case "SBERRUB":
+                setTranslateAccount("Номер карты");
+                setPlaceholderAccount("Введите номер карты");
+                break;
+            case "SBPRUB":
+                setTranslateAccount("Номер телефона и банк получателя");
+                setPlaceholderAccount("Укажите номер телефона и банк получателя");
+                break;
+            default: 
+                setTranslateAccount("Счёт получения");
+                setPlaceholderAccount("Введите свой счет получения");
+
+        }
+    }
 
     useEffect(()=>{
         const send = sendValutas[sendIndex];
         const receiver = receiverValutas[receiverIndex];
         formik.setFieldValue('send',send);
         formik.setFieldValue('receiver',receiver);
+
+        isSBERReceiver(receiver);
+
+        console.log(receiver);
 
         fetcherFetch(`course/?from=${send || "BTC"}&to=${receiver || "USDTTRC20"}&amount=${formik.values.valueValuta}`).then((res:courseType)=>{
             setState(res);
@@ -186,6 +210,8 @@ export const Form = () => {
         if(['USDTTRC20',"USDTERC20","DAIERC20"].includes(valuta)) return 3; 
         if(["XMR","DOGE","LTC",,"ETH","BTC"].includes(valuta)) return 6;
     }
+
+    
 
     
     return (
@@ -288,10 +314,10 @@ export const Form = () => {
                         <ErrorView id="telegram" formik={formik}/>
                     </div>
                     <div className=" space-y-2">
-                        <label className=" text-xl text-white">{t("Счёт получения")}:</label>
+                        <label className=" text-xl text-white">{t(translateAccount)}:</label>
                         <input
                             className="outline-none px-5 rounded-lg w-full py-4 max-md:py-3"
-                            placeholder={t("Введите свой счет получения")}
+                            placeholder={t(placeholderAccount)}
                             id="account"
                             name="account"
                             type="text"
