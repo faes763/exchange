@@ -78,7 +78,6 @@ function Form({
       },
       validationSchema:  isRegister ? validationSchemaRegistration : validationSchema,
       onSubmit: (values) => {
-        console.log(values);
         const url = isRegister ? 'exchange/register' : '/exchange/auth';
         
         try {
@@ -136,7 +135,7 @@ function Form({
     return(
         <form 
             onSubmit={formik.handleSubmit}
-            className=" bg-main-gray md:min-w-[400px] max-md:py-8 max-md:px-4 py-16 px-8 rounded-2xl flex flex-col gap-4"
+            className=" bg-main-gray dark:bg-transparent dark:bg-main-header md:min-w-[400px] max-md:py-8 max-md:px-4 py-16 px-8 rounded-2xl flex flex-col gap-4"
         >
             <div className="w-full space-y-2">
                 <label className=" text-[#6A6A6A]" htmlFor="email">E-mail</label>

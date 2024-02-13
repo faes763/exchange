@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 export function ExchangePopup() {
     const {isOpen,close,values,currencySent} = useFormStore();
@@ -27,6 +28,7 @@ export function ExchangePopup() {
 
     return(
         <>
+         
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={close}>
                 <Transition.Child
@@ -52,15 +54,15 @@ export function ExchangePopup() {
                         leaveFrom="opacity-100 scale-100"
                         leaveTo="opacity-0 scale-95"
                     >
-                        <Dialog.Panel className="w-full space-y-5 max-w-md text-center transform overflow-hidden rounded-2xl bg-white px-6 py-8 md:py-10 align-middle shadow-xl transition-all">
+                        <Dialog.Panel className="w-full space-y-5 dark:border-2 dark:border-main-blue max-w-md text-center transform overflow-hidden rounded-2xl dark:bg-main-header dark:bg-transparent dark:backdrop-blur-sm bg-white px-6 py-8 md:py-10 align-middle shadow-xl transition-all">
                         <Dialog.Title
                             as="h3"
-                            className="text-h2 text-center font-bold  text-gray-900"
+                            className="text-h2 text-center font-bold "
                         >
-                            Правила
+                            {t("Правила")}
                         </Dialog.Title>
                         <div className="">
-                            <p className="text-sm text-center text-gray-500">
+                            <p className="text-sm text-center ">
                                 {t("Внимательно проверяйте сумму")}
                             <br/>
                             <br/>
@@ -71,7 +73,7 @@ export function ExchangePopup() {
                             'flex items-center text-left justify-center text-sm gap-2 ',
                             !isAgree && ref.current && "text-red-600"
                         )}>
-                            <div onClick={()=>setAgree(prev=>!prev)} className={`${isAgree ? "border-main-blue text-main-blue bg-white" : " text-white border-[rgba(209, 209, 214, 1)]"} transition-all border rounded`}>
+                            <div onClick={()=>setAgree(prev=>!prev)} className={`${isAgree ? "border-main-blue text-main-blue bg-white" : " text-white dark:text-transparent border-[rgba(209, 209, 214, 1)]"} transition-all border rounded`}>
                                 <Sprite name="ver" className=" cursor-pointer w-4 h-4"/>
                             </div>
                             <span >
@@ -105,7 +107,17 @@ export function ExchangePopup() {
                                     })
                                     .catch((error)=>{
                                         console.error(error);
-                                        alert("Произошла ошибка... \n попробуйте позже");
+                                        // alert("Произошла ошибка... \n попробуйте позже");
+                                        toast.error(error.response.data.message, {
+                                            position: "bottom-right",
+                                            autoClose: 5000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            draggable: true,
+                                            progress: undefined,
+                                            theme: (localStorage.getItem('theme') as "light" | "dark") || "light",
+                                        });
                                     }) 
                                     .finally(()=>{
                                         setLoad(false);

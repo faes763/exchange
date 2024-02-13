@@ -29,11 +29,11 @@ export function LanguageToggle() {
             <Switch
                 checked={enabled}
                 onChange={changeLang}
-                className={`shadow-inner inline-flex h-9 px-2 items-center bg-main-gray  w-14 cursor-pointer rounded-full `}>
+                className={`shadow-inner inline-flex h-7 px-2 items-center  dark:bg-transparent dark:bg-main-header bg-main-gray  w-14 cursor-pointer rounded-full `}>
                 <span
-                aria-hidden="true"
-                className={`${enabled ? 'translate-x-5' : 'translate-x-0'}
-                    pointer-events-none inline-block h-5 w-5 transform rounded-full bg-main-blue shadow-xl ring-0 transition duration-200 ease-in-out`}
+                    aria-hidden="true"
+                    className={`${enabled ? 'translate-x-5' : 'translate-x-0'}
+                        pointer-events-none inline-block h-5 w-5 transform rounded-full bg-main-blue shadow-xl ring-0 transition duration-200 ease-in-out`}
                 />
             </Switch>
             <span >en</span>

@@ -20,12 +20,11 @@ export function Confirm({searchParams}:{searchParams:{email:string}}) {
         }
     },[]);
 
-
     return(
         <main className=" min-h-[50vh] min-[1556px]:min-h-[70vh]">
             <div className=" space-y-8 text-center container">
                 {!show && <p className=" text-h1 text-center font-semibold">{t("Подтвердите свою почту")}</p>}
-                <div className=" inline-block rounded-lg max-md:px-8 max-md:py-4 text-center px-16 py-8 bg-main-gray">
+                <div className=" inline-block rounded-lg max-md:px-8 max-md:py-4 text-center px-16 py-8 dark:bg-transparent dark:bg-main-header bg-main-gray">
                     <p>{t(show ? "Ваш E-mail успешно подтвержден!" : "На ваш E-mail была выслана ссылка, для верификации вашего профиля, перейдите по ней, чтобы активировать аккаунт")}</p>
                 </div>
             </div>

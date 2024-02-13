@@ -154,6 +154,8 @@ export const Form = () => {
         fetcherFetch(`course/?from=${send || "BTC"}&to=${receiver || "USDTTRC20"}&amount=${formik.values.valueValuta}`).then((res:courseType)=>{
             setState(res);
             formik.setFieldValue('valueValuta',1);
+            console.log(receiver);
+            console.log(numbFixed(receiverValutas[receiverIndex]));
             formik.setFieldValue('receiver',+Number(res.oneValue)?.toFixed(numbFixed(receiverValutas[receiverIndex])));
             // setReceiver(+Number(res.oneValue)?.toFixed(numbFixed(receiverValutas[receiverIndex])));
         });
@@ -206,9 +208,9 @@ export const Form = () => {
 
     function numbFixed(valuta:string) {
         if(["TCSBQRUB","CASHRUB2","CASHRUB"].includes(valuta)) return 0;
-        if(["SBERRUB","SBPRUB"]) return 2;
+        if(["SBERRUB","SBPRUB"].includes(valuta)) return 2;
         if(['USDTTRC20',"USDTERC20","DAIERC20"].includes(valuta)) return 3; 
-        if(["XMR","DOGE","LTC",,"ETH","BTC"].includes(valuta)) return 6;
+        if(["XMR","DOGE","LTC","ETH","BTC"].includes(valuta)) return 6;
     }
 
     
@@ -220,11 +222,11 @@ export const Form = () => {
             onSubmit={formik.handleSubmit}
         >
             <div className=" flex justify-between flex-col gap-5">
-                <div className=" py-10 max-md:px-5 max-md:py-10 space-y-2 bg-main-blue rounded-2xl px-10">
+                <div className=" py-10 max-md:px-5 dark:bg-transparent dark:bg-main-header max-md:py-10 space-y-2 bg-main-blue rounded-2xl px-10">
                     <label className=" text-xl text-white">{t('Отдаете')}:</label>
-                    <div className="bg-white rounded-lg items-center flex px-5 gap-5 justify-between relative">
+                    <div className="bg-white dark:bg-transparent dark:border dark:border-main-blue rounded-lg items-center flex px-5 gap-5 justify-between relative">
                         <input
-                            className="outline-none w-full py-4 max-md:py-3"
+                            className="outline-none bg-transparent w-full py-4 max-md:py-3"
                             placeholder={t("Введите число")}
                             id="valueValuta"
                             name="valueValuta"
@@ -254,11 +256,11 @@ export const Form = () => {
                      </div>
                     )}
                 </div>
-                <div className=" p-10 max-md:p-5 space-y-2  bg-main-blue rounded-2xl">
+                <div className=" p-10 max-md:p-5  dark:bg-transparent dark:bg-main-header space-y-2  bg-main-blue rounded-2xl">
                     <p className=" text-white  text-xl">{t('Получайте')}:</p>
-                    <div className="bg-white rounded-lg items-center flex px-5 gap-5 justify-between relative">
+                    <div className="bg-white dark:bg-transparent dark:border dark:border-main-blue rounded-lg items-center flex px-5 gap-5 justify-between relative">
                         <input
-                            className="outline-none w-full py-4 max-md:py-3"
+                            className="outline-none bg-transparent w-full py-4 max-md:py-3"
                             placeholder={t("Введите число")}
                             type="number"
                             readOnly
@@ -275,19 +277,19 @@ export const Form = () => {
                     <ErrorView id="receiver" formik={formik}/>
                 </div>
                 
-                <div className="bg-white max-md:px-5 flex gap-5 py-4 border rounded-2xl border-main-blue px-10">
+                <div className="bg-white dark:bg-transparent dark:bg-main-header max-md:px-5 flex gap-5 py-4 border rounded-2xl border-main-blue px-10">
                     <Image width={40} height={40} alt="Предупреждаем!" src={'/images/informate.svg'}/>
                     <p className="max-md:text-xs font-semibold text-sm">{t("Связь")}</p>
                 </div>
             </div>
             <div className="h-full flex flex-col gap-5">
-                <div className=" h-full flex flex-col p-10 max-md:p-5 justify-center gap-10 rounded-2xl bg-main-blue">
+                <div className=" h-full flex flex-col p-10 max-md:p-5 dark:bg-transparent dark:bg-main-header justify-center gap-10 rounded-2xl  bg-main-blue">
                     {showEmail && (
                     <div className=" space-y-2">
                         <label className=" text-xl text-white">E-mail:</label>
                         <input
                             readOnly
-                            className="outline-none px-5 rounded-lg w-full py-4 max-md:py-3"
+                            className="outline-none dark:bg-transparent dark:border dark:border-main-blue px-5 rounded-lg w-full py-4 max-md:py-3"
                             placeholder={t("Введите свой e-mail")}
                             id="email"
                             name="email"
@@ -302,7 +304,7 @@ export const Form = () => {
                     <div className=" space-y-2">
                         <label className=" text-xl text-white">{t("Логин в телеграме")}:</label>
                         <input
-                            className="outline-none px-5 rounded-lg w-full py-4 max-md:py-3"
+                            className="outline-none dark:bg-transparent dark:border dark:border-main-blue px-5 rounded-lg w-full py-4 max-md:py-3"
                             placeholder={t("Введите логин телеграма")}
                             id="telegram"
                             name="telegram"
@@ -316,7 +318,7 @@ export const Form = () => {
                     <div className=" space-y-2">
                         <label className=" text-xl text-white">{t(translateAccount)}:</label>
                         <input
-                            className="outline-none px-5 rounded-lg w-full py-4 max-md:py-3"
+                            className="outline-none dark:bg-transparent dark:border dark:border-main-blue px-5 rounded-lg w-full py-4 max-md:py-3"
                             placeholder={t(placeholderAccount)}
                             id="account"
                             name="account"

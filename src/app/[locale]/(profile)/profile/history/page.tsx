@@ -3,7 +3,6 @@ import { axiosCfg } from "@/core-axios";
 import clsx from "clsx"
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface RequestType {
@@ -23,7 +22,6 @@ interface RequestType {
 export default function History() {
     const t = useTranslations();
     const [isLoading,setLoading] = useState(true);
-    const router = useRouter();
 
     useEffect(()=>{
         axiosCfg('/exchange/user/tickets').then((res)=>{
@@ -57,7 +55,7 @@ export default function History() {
     const [data,setData] = useState<RequestType[]>([]);
 
     return(
-        <div className="flex p-10  max-md:p-5 bg-main-gray rounded-lg gap-5 flex-col">
+        <div className="flex p-10 dark:bg-transparent dark:bg-main-header max-md:p-5 bg-main-gray rounded-lg gap-5 flex-col">
             <div className="border-b-2 gap-1 max-md:hidden pb-5 grid grid-cols-5">
                 <p>{t("Заявка")}</p>
                 <p>{t("Дата")}</p>

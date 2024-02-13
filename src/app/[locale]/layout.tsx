@@ -28,7 +28,7 @@ export default function LocaleLayout({children, params: {locale}}:{
     const messages = useMessages();
 
     return (
-    <html lang={locale}>
+    <html className='' lang={locale}>
       <head>
           <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7W8ESW1TX"></script>
           <script id='google-stat' dangerouslySetInnerHTML={{__html:`

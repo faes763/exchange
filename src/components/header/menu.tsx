@@ -1,5 +1,6 @@
 'use client'
 
+import { Sprite } from "@/tags/sprite";
 import clsx from "clsx";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
@@ -17,14 +18,6 @@ const navLinksLanguage = {
             name:"Rules",
             href:"/en/policy"
         },
-        // {
-        //     name: "Reviews",
-        //     href: "/en/#reviews"
-        // },
-        // {
-        //     name: "Who We Are?",
-        //     href: "/en/#about"
-        // },
         {
             name: "Profile",
             href: "/en/profile"
@@ -39,14 +32,6 @@ const navLinksLanguage = {
             name:"Правила",
             href:"/ru/policy"
         },
-        // {
-        //     name: "Отзывы",
-        //     href: "/ru/#reviews"
-        // },
-        // {
-        //     name: "Кто мы?",
-        //     href: "/ru/#about"
-        // },
         {
             name: "Личный кабинет",
             href: "/ru/profile"
@@ -71,30 +56,38 @@ export function Menu() {
             <div className=" lg:hidden">
                 <svg
                     onClick={()=>{setOpen(prev=>!prev)}}
-                    className=" fill-main-purple cursor-pointer outline-none"
+                    className=" dark:fill-white fill-black cursor-pointer outline-none"
                     width="30"
                     height="32"
                     viewBox="0 0 32 44"
                     xmlns="http://www.w3.org/2000/svg"
                 >
-                    <rect className={clsx(
-                        open ? " translate-x-[7px] translate-y-[25.5px] -rotate-45" : "translate-x-[2px] translate-y-[7px]",
-                        "transition-all duration-500"
-                    )} width={30} height={4} rx={2}/>
                     <rect 
-                    className={clsx(
-                        open ? " translate-x-[10px] translate-y-1 rotate-45" : "translate-x-[3px] translate-y-[19px]",
-                        "transition-all duration-500"
-                        )} width={30} height={4} rx={2}/>
-                    <rect className={clsx(
-                        open ? " translate-x-[10px] translate-y-1 rotate-45" : "translate-x-[3px] translate-y-[31px]",
-                        "transition-all duration-500"
-                        )} width={30} height={4} rx={2}/>
+                        className={clsx(
+                            open ? " translate-x-[7px] translate-y-[25.5px] -rotate-45" : "translate-x-[2px] translate-y-[7px]",
+                            "transition-all duration-500"
+                        )} 
+                        width={30} height={4} rx={2}
+                    />
+                    <rect 
+                        className={clsx(
+                            open ? " translate-x-[10px] translate-y-1 rotate-45" : "translate-x-[3px] translate-y-[19px]",
+                            "transition-all duration-500"
+                            )} 
+                        width={30} height={4} rx={2}
+                    />
+                    <rect 
+                        className={clsx(
+                            open ? " translate-x-[10px] translate-y-1 rotate-45" : "translate-x-[3px] translate-y-[31px]",
+                            "transition-all  duration-500"
+                        )} 
+                        width={30} height={4} rx={2}
+                    />
                 </svg>
             </div>
             <div>
                 <ul className={clsx(
-                    " max-lg:absolute w-full left-0 max-lg:bg-white max-xl:gap-8 max-lg:translate-y-7 max-lg:py-5 max-lg:flex-col flex items-center gap-14",
+                    " max-lg:absolute w-full left-0 max-lg:bg-white  max-lg:dark:bg-[#1A1E2F] max-xl:gap-8 max-lg:translate-y-7 max-lg:py-5 max-lg:flex-col flex items-center gap-14",
                     !open && "max-lg:hidden"
                 )}>
                 {navLinksLanguage[locale].map((link,index)=>(
@@ -112,8 +105,8 @@ export function Menu() {
                     </li>
                 ))}
                 <li className="flex gap-5 max-lg:flex-col reverse items-center">
-                <div className="flex border border-black items-center gap-3 py-2 px-5 rounded-full">
-                    <Image className="w-5 h-5" width={25} height={25} alt="" src={'/images/lamp.svg'}/>
+                <div className="flex border border-black dark:border-white items-center gap-3 py-2 px-5 rounded-full">
+                    <Sprite name="lamp" className="w-5 h-5"/>
                     <p>StuartExchange@0nl1ne.at</p>
                 </div>
                 <div>

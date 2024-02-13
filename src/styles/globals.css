@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 
+body {  
+  @apply bg-white dark:bg-main-body dark:text-white;
+}
+
 .text-h1 {
   @apply text-4xl max-xl:text-3xl max-lg:text-2xl max-md:text-xl;
 }
@@ -13,6 +17,8 @@
 .container {
   @apply mx-auto
 }
+
+
 button:hover {
   @apply opacity-70 cursor-pointer;
 }

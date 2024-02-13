@@ -12,34 +12,34 @@ const about = {
         {
             course : "Анонимность обмена",
             text: "Мы не просим и не храним данные наших клиентов. Выбирая нас, вы гарантируете свою конфиденциальность.",
-            sprite: "/images/anon.png"
+            sprite: "/images/anon.svg"
         },
         {
             course : "Стабильный курс",
             text: "Наш обменник работает по API CoinGecko и Garantex - курс фиксируется на момент сделки, что дает прозрачность обмена и без навязывания дополнительных комиссий.",
-            sprite: "/images/rate.png"  
+            sprite: "/images/rate.svg"  
         },
         {
             course : "Мгновенный обмен",
             text: "Наши операторы работают 24/7! Мы гарантируем скорость обменных транзакций и фиатных расчетов!",
-            sprite: "/images/exch.png"
+            sprite: "/images/exch.svg"
         },
     ],
     en: [
         {
             "course": "Exchange Anonymity",
             "text": "We do not request or store our customers' data. By choosing us, you guarantee your confidentiality.",
-            "sprite": "/images/anon.png"
+            "sprite": "/images/anon.svg"
         },
         {
             "course": "Stable Exchange Rate",
             "text": "Our exchange works with the CoinGecko and Garantex APIs - the rate is fixed at the time of the transaction, providing transparency in the exchange process without imposing additional fees.",
-            "sprite": "/images/rate.png"
+            "sprite": "/images/rate.svg"
         },
         {
             "course": "Instant Exchange",
             "text": "Our operators work 24/7! We guarantee the speed of exchange transactions and fiat settlements!",
-            "sprite": "/images/exch.png"
+            "sprite": "/images/exch.svg"
         }
     ]
 }
@@ -53,7 +53,7 @@ export function About() {
             <div className="  max-lg:grid-cols-1 justify-items-center gap-5 grid grid-cols-3">
             <Fade triggerOnce className=" h- w-full" cascade>
                 {about[locale].map((me,index)=>(
-                    <div className="p-5 w-full h-full    bg-white shadow-about rounded-xl space-y-2  " key={me.course+index}>
+                    <div className="p-5 w-full h-full dark:bg-transparent dark:bg-main-header   bg-white shadow-about rounded-xl space-y-2  " key={me.course+index}>
                         <img className=" w-10 h-10" src={me.sprite} alt={""}/>
                         {/* <MouseParallaxImage url={me.sprite} i={index}/> */}
                         <p className=" text-lg font-semibold">{me.course}</p>

@@ -31,14 +31,7 @@ const validationSchema = Yup.object().shape({
         .oneOf([Yup.ref('password'), ''], 'Passwords must match'),
         
   });
-function Form({
-    borderStyle = "focus:border-black",
-    buttonStyle = "bg-main-purple text-white",
-}:{
-    borderStyle?: string,
-    buttonStyle?: string,
-   
-}) {
+function Form() {
     const router = useRouter();
     const formik = useFormik({
       initialValues: {
@@ -54,9 +47,7 @@ function Form({
             if(values.password != "" || values.telegram != "") {
                 axiosCfg.get(`exchange/user/change?telegramId=${values.telegram}${values.password.length>0 ?`&password=${values.password}`:""}&email=${values.email}`)
                 .then((res)=>{
-                    console.log(res);
                     toast.success(t("Данные успешно обновлены!"))
-                    // router.push('/successfully');
                 })
                 .catch(error=>{
                     console.error(error);
@@ -82,12 +73,10 @@ function Form({
                 }
             );
             axiosCfg('exchange/user/info').then(res=>{
-                console.log(res);
                 formik.setFieldValue("email",res.data?.email);
                 formik.setFieldValue("telegram",res.data?.telegram || "");
-                // setShow(true);
             }).catch((error)=>{
-                console.log(error);
+                console.error(error);
                 router.push('/auth');
             });
         } else {
@@ -99,7 +88,7 @@ function Form({
     return(
         <form
             onSubmit={formik.handleSubmit}
-            className=" bg-main-gray p-10 max-md:gap-5 max-md:p-5 max-md:grid-cols-1 rounded-2xl grid grid-cols-2 justify-items-center items-end gap-10"
+            className=" bg-main-gray dark:bg-transparent dark:bg-main-header p-10 max-md:gap-5 max-md:p-5 max-md:grid-cols-1 rounded-2xl grid grid-cols-2 justify-items-center items-end gap-10"
         >
             
             <div className="w-full space-y-2">

@@ -63,9 +63,9 @@ export default function Request({
             <div className={clsx("dots flex space-x-1", {
                 'hidden': error
             })}>
-                <div className="dot-1 w-1 h-1 bg-black rounded-full"/>
-                <div className="dot-2 w-1 h-1 bg-black rounded-full"/>
-                <div className="dot-3 w-1 h-1 bg-black rounded-full"/>
+                <div className="dot-1 w-1 h-1 dark:bg-white bg-black rounded-full"/>
+                <div className="dot-2 w-1 h-1 dark:bg-white bg-black rounded-full"/>
+                <div className="dot-3 w-1 h-1 dark:bg-white bg-black rounded-full"/>
             </div>
         </div>
     )
@@ -80,22 +80,22 @@ export default function Request({
                 </div>
                 <div className="flex max-md:flex-col-reverse flex-col gap-8">
                     <div className={` gap-5 max-lg:grid-cols-2 max-md:grid-cols-1 rounded-lg grid ${data?.email ? " grid-cols-4" : "grid-cols-3"}`}>
-                        <div className=" bg-main-gray rounded-lg py-5 px-8 space-y-4">
+                        <div className=" dark:bg-transparent dark:bg-main-header bg-main-gray rounded-lg py-5 px-8 space-y-4">
                             <p className=" text-[#5E5E5E]">{t("Отдаете")}:</p>
                             <p className=" text-lg font-semibold">{data?.amountReceived} {data?.currencyReceived}</p>
                         </div>
-                        <div className=" bg-main-gray py-5 rounded-lg px-8 space-y-4">
+                        <div className=" dark:bg-transparent dark:bg-main-header bg-main-gray py-5 rounded-lg px-8 space-y-4">
                             <p className=" text-[#5E5E5E]">{t("Получаете")}:</p>
                             <p className=" text-lg font-semibold">{data?.amountSent} {data?.currencySent} </p>
                         </div>
                         {data?.email && (
-                        <div className=" bg-main-gray py-5 rounded-lg px-8 space-y-4">
+                        <div className=" dark:bg-transparent dark:bg-main-header bg-main-gray py-5 rounded-lg px-8 space-y-4">
                             <p className=" text-[#5E5E5E]">E-mail:</p>
                             <p className=" break-words text-lg font-semibold">{data?.email}</p>
                          </div>  
                         )}
                        
-                        <div className=" bg-main-gray py-5 rounded-lg px-8 space-y-4">
+                        <div className=" dark:bg-transparent dark:bg-main-header bg-main-gray py-5 rounded-lg px-8 space-y-4">
                             <p className=" text-[#5E5E5E]">{t("Счёт получения")}:</p>
                             <p className="  text-lg font-semibold">{data?.addressSent}</p>
                         </div>
@@ -150,7 +150,7 @@ function WaitSuccess({
     const [click1,setClick1] = useState('text-white')
     return(
         <div className=" max-xl:flex-col flex gap-10">
-            <div className=" bg-main-blue rounded-2xl text-white flex flex-col gap-5 p-10 xl:w-4/5">
+            <div className=" bg-main-blue dark:bg-transparent dark:bg-main-header rounded-2xl text-white flex flex-col gap-5 p-10 xl:w-4/5">
                 <p className=" text-3xl font-semibold">
                     {t(status == "Pending" ? "Оплатите заявку в течении" : "Мы получили платеж, находимся в процессе выплаты")} 
                     {status == "Pending" && (

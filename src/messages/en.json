@@ -27,6 +27,7 @@
     },
     "Введите номер карты":"Enter card number",
     "Укажите номер телефона и банк получателя":"Indicate the recipient's phone number and bank",
+    "Правила":"Rules",
     "Номер карты":"Card number",
     "Номер телефона и банк получателя":"Recipient's phone number and bank",
     "Внимательно проверяйте сумму": "Carefully check the amount you send to our wallet; if it subsequently turns out to be less than specified, the application will be considered unpaid.",

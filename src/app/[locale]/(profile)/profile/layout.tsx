@@ -71,7 +71,6 @@ export default function ProfileLayout({
             );
             axiosCfg('/exchange/user/tickets').then(res=>{
                 setShow(true);
-                console.log(res);
             }).catch((error)=>{
                 console.log(error);
                 router.push('/auth');
@@ -99,12 +98,12 @@ export default function ProfileLayout({
             <div className="container gap-10 max-lg:flex max-lg:flex-col grid grid-cols-[300px_1fr]">
                 <div className=" space-y-8">
                     <p className=" text-3xl font-bold">Настройки</p>
-                    <div className="bg-main-gray p-10 max-md:p-5 rounded-lg flex flex-col gap-5">
+                    <div className="bg-main-gray dark:bg-transparent dark:bg-main-header p-10 max-md:p-5 rounded-lg flex flex-col gap-5">
                         {pagination[locale].map((link,index)=>(
                             <Link onClick={()=>{
                                 if(link.onClick) link.onClick();
                             }} className={clsx(
-                                pathname.replace(locale+"/","") == link.href && "text-black",
+                                pathname.replace(locale+"/","") == link.href && "text-black dark:text-white",
                                 "flex gap-2 text-[#9D9D9D]"
                             )} key={link.href+link.name+index} href={link.href}>
                                 <Sprite name={link.sprite} className="w-5 h-5"/>
