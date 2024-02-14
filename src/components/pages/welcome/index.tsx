@@ -42,11 +42,11 @@ export function Welcome() {
 
     const t = useTranslations('welcome');
 
-    // if(!show) return(
-    //     <div className="fixed z-[60] bg-white dark:bg-main-body min-h-screen inset-0 flex items-center justify-center">
-    //         <div className="loader">loading</div>
-    //     </div>
-    // )
+    if(!show) return(
+        <div className="fixed z-[60] bg-white dark:bg-main-body min-h-screen inset-0 flex items-center justify-center">
+            <div className="loader">loading</div>
+        </div>
+    );
 
     return(
         <main>
@@ -73,5 +73,5 @@ export function Welcome() {
                 theme="light"
             />
         </main>
-    )
+    );
 }
