@@ -46,7 +46,7 @@ const navLinks = {
 export function Footer() {
     const locale = useLocale() as "en" | "ru";
     return(
-        <footer className="mt-16 dark:bg-transparent dark:bg-main-header max-md:mt-8 bg-main-gray py-10">
+        <footer className="mt-16 dark:bg-transparent dark:backdrop-blur-sm dark:bg-main-header max-md:mt-8 bg-main-gray py-10">
             <div className=" flex gap-5 max-md:flex-col items-center justify-between container">
                 <div className=" space-y-5" >
                     <div className=" items-center flex gap-3">

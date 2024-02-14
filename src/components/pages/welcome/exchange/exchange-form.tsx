@@ -149,13 +149,9 @@ export const Form = () => {
 
         isSBERReceiver(receiver);
 
-        console.log(receiver);
-
         fetcherFetch(`course/?from=${send || "BTC"}&to=${receiver || "USDTTRC20"}&amount=${formik.values.valueValuta}`).then((res:courseType)=>{
             setState(res);
             formik.setFieldValue('valueValuta',1);
-            console.log(receiver);
-            console.log(numbFixed(receiverValutas[receiverIndex]));
             formik.setFieldValue('receiver',+Number(res.oneValue)?.toFixed(numbFixed(receiverValutas[receiverIndex])));
             // setReceiver(+Number(res.oneValue)?.toFixed(numbFixed(receiverValutas[receiverIndex])));
         });
@@ -222,7 +218,7 @@ export const Form = () => {
             onSubmit={formik.handleSubmit}
         >
             <div className=" flex justify-between flex-col gap-5">
-                <div className=" py-10 max-md:px-5 dark:bg-transparent dark:bg-main-header max-md:py-10 space-y-2 bg-main-blue rounded-2xl px-10">
+                <div className=" py-10 max-md:px-5 relative z-20 dark:bg-transparent dark:backdrop-blur-sm dark:bg-main-header max-md:py-10 space-y-2 bg-main-blue rounded-2xl px-10">
                     <label className=" text-xl text-white">{t('Отдаете')}:</label>
                     <div className="bg-white dark:bg-transparent dark:border dark:border-main-blue rounded-lg items-center flex px-5 gap-5 justify-between relative">
                         <input
@@ -256,7 +252,7 @@ export const Form = () => {
                      </div>
                     )}
                 </div>
-                <div className=" p-10 max-md:p-5  dark:bg-transparent dark:bg-main-header space-y-2  bg-main-blue rounded-2xl">
+                <div className=" p-10 max-md:p-5 relative z-10  dark:bg-transparent dark:backdrop-blur-sm dark:bg-main-header space-y-2  bg-main-blue rounded-2xl">
                     <p className=" text-white  text-xl">{t('Получайте')}:</p>
                     <div className="bg-white dark:bg-transparent dark:border dark:border-main-blue rounded-lg items-center flex px-5 gap-5 justify-between relative">
                         <input
@@ -283,7 +279,7 @@ export const Form = () => {
                 </div>
             </div>
             <div className="h-full flex flex-col gap-5">
-                <div className=" h-full flex flex-col p-10 max-md:p-5 dark:bg-transparent dark:bg-main-header justify-center gap-10 rounded-2xl  bg-main-blue">
+                <div className=" h-full flex flex-col p-10 max-md:p-5 dark:bg-transparent dark:backdrop-blur-sm dark:bg-main-header justify-center gap-10 rounded-2xl  bg-main-blue">
                     {showEmail && (
                     <div className=" space-y-2">
                         <label className=" text-xl text-white">E-mail:</label>
@@ -304,7 +300,7 @@ export const Form = () => {
                     <div className=" space-y-2">
                         <label className=" text-xl text-white">{t("Логин в телеграме")}:</label>
                         <input
-                            className="outline-none dark:bg-transparent dark:border dark:border-main-blue px-5 rounded-lg w-full py-4 max-md:py-3"
+                            className="outline-none dark:bg-transparent dark:border  dark:border-main-blue px-5 rounded-lg w-full py-4 max-md:py-3"
                             placeholder={t("Введите логин телеграма")}
                             id="telegram"
                             name="telegram"
@@ -383,14 +379,14 @@ function List({
         value={0}
         onChange={setSelect}
     >
-        <Listbox.Button className={' w-[max-content] uppercase flex-nowrap items-center gap-2 py-1.5 flex max-md:text-xs text-main-dark-gray '}>
+        <Listbox.Button className={' w-[max-content] dark:text-white uppercase flex-nowrap items-center gap-2 py-1.5 flex max-md:text-xs text-main-dark-gray '}>
             {select && <Image width={50} height={50} className="w-5 h-5" alt="" src={`/valuta/${select}.svg`}/>}
             {(map as any)[select] != undefined? (map as any)[select] : select}
         </Listbox.Button>
-        <Listbox.Options className={' flex flex-col  pb-2 top-full z-10 -right-5 rounded-b-xl absolute bg-white'}>
+        <Listbox.Options className={' flex flex-col  pb-2 top-full z-10 -right-5 rounded-b-xl absolute dark:bg-transparent dark:bg-main-header dark:backdrop-blur-sm bg-white'}>
             {arrayList.map((list,index) => (
             (select != list && list!=select1) && (
-                <Listbox.Option className={`whitespace-nowrap ${arrayList.length-1 != index && "border-b"} pl-5 pr-10 items-center gap-2 py-1.5 flex max-md:text-xs text-sm uppercase cursor-pointer text-main-dark-gray hover:text-black `} key={index+list} value={index}>
+                <Listbox.Option className={`whitespace-nowrap ${arrayList.length-1 != index && "border-b"} dark:border-white/10 pl-5 pr-10 items-center gap-2 py-1.5 flex max-md:text-xs text-sm uppercase cursor-pointer text-main-dark-gray dark:text-white/60 dark:hover:text-white hover:text-black `} key={index+list} value={index}>
                     <Image width={50} height={50} className="w-5 h-5" alt="" src={`/valuta/${list}.svg`}/>
                     {(map as any)[list] != undefined? (map as any)[list] : list}
                 </Listbox.Option>

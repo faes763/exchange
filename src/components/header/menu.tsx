@@ -14,10 +14,10 @@ const navLinksLanguage = {
             name: "Home",
             href: "/en/"
         },
-        {
-            name:"Rules",
-            href:"/en/policy"
-        },
+        // {
+            // name:"Rules",
+            // href:"/en/policy"
+        // },
         {
             name: "Profile",
             href: "/en/profile"
@@ -28,12 +28,12 @@ const navLinksLanguage = {
             name: "Главная",
             href: "/ru/"
         },
+        // {
+        //     name:"Правила",
+        //     href:"/ru/policy"
+        // },
         {
-            name:"Правила",
-            href:"/ru/policy"
-        },
-        {
-            name: "Личный кабинет",
+            name: "Профиль",
             href: "/ru/profile"
         },
     ]
@@ -87,7 +87,7 @@ export function Menu() {
             </div>
             <div>
                 <ul className={clsx(
-                    " max-lg:absolute w-full left-0 max-lg:bg-white  max-lg:dark:bg-[#1A1E2F] max-xl:gap-8 max-lg:translate-y-7 max-lg:py-5 max-lg:flex-col flex items-center gap-14",
+                    " max-lg:absolute w-full z-50 left-0 max-lg:bg-white  max-lg:dark:bg-main-header dark:backdrop-blur-sm max-lg:dark:bg-transparent  max-xl:gap-8 max-lg:translate-y-7 max-lg:py-5 max-lg:flex-col flex items-center gap-14",
                     !open && "max-lg:hidden"
                 )}>
                 {navLinksLanguage[locale].map((link,index)=>(

@@ -53,7 +53,7 @@ export function About() {
             <div className="  max-lg:grid-cols-1 justify-items-center gap-5 grid grid-cols-3">
             <Fade triggerOnce className=" h- w-full" cascade>
                 {about[locale].map((me,index)=>(
-                    <div className="p-5 w-full h-full dark:bg-transparent dark:bg-main-header   bg-white shadow-about rounded-xl space-y-2  " key={me.course+index}>
+                    <div className="p-5 w-full h-full dark:bg-transparent dark:bg-main-header dark:backdrop-blur-sm  bg-white shadow-about rounded-xl space-y-2  " key={me.course+index}>
                         <img className=" w-10 h-10" src={me.sprite} alt={""}/>
                         {/* <MouseParallaxImage url={me.sprite} i={index}/> */}
                         <p className=" text-lg font-semibold">{me.course}</p>
