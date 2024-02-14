@@ -1,3 +1,4 @@
+'use client'
 import { ToastContainer } from "react-toastify";
 import { About } from "./about";
 import { ExchangeForm } from "./exchange/exchange-form";
@@ -5,9 +6,48 @@ import { ExchangePopup } from "./exchange/exchange-popup";
 import { How } from "./how";
 import { useTranslations } from "next-intl";
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect, useState } from "react";
+
+
+function hasElapsed30Seconds(startTime:number) {
+    const currentTime = new Date().getTime();
+    const elapsedTime = currentTime - startTime;
+    return elapsedTime >= 30000; // Проверяем, прошло ли 30 секунд (30 * 1000 миллисекунд)
+}
+
 
 export function Welcome() {
+
+    useEffect(()=>{
+        const date = new Date().getTime();
+        const getTime = localStorage.getItem('date');
+        if(getTime) {
+            if(hasElapsed30Seconds(+getTime)) {
+                localStorage.setItem('date',`${date}`);
+                setTimeout(()=>{
+                    setShow(true);
+                },1500);
+            }
+            else setShow(true);
+        } else {
+            localStorage.setItem('date',`${date}`);
+            setTimeout(()=>{
+                setShow(true);
+            },1500);
+        }
+    },[]);
+    
+
+    const [show,setShow] = useState<boolean>(false);
+
     const t = useTranslations('welcome');
+
+    // if(!show) return(
+    //     <div className="fixed z-[60] bg-white dark:bg-main-body min-h-screen inset-0 flex items-center justify-center">
+    //         <div className="loader">loading</div>
+    //     </div>
+    // )
+
     return(
         <main>
             <div className="container flex flex-col gap-16 max-md:gap-8">

@@ -383,10 +383,10 @@ function List({
             {select && <Image width={50} height={50} className="w-5 h-5" alt="" src={`/valuta/${select}.svg`}/>}
             {(map as any)[select] != undefined? (map as any)[select] : select}
         </Listbox.Button>
-        <Listbox.Options className={' flex flex-col  pb-2 top-full z-10 -right-5 rounded-b-xl absolute dark:bg-transparent dark:bg-main-header dark:backdrop-blur-sm bg-white'}>
+        <Listbox.Options className={' flex flex-col  pb-2 top-full z-10 -right-5 rounded-b-xl absolute dark:bg-black/30 dark:bg-main-header dark:backdrop-blur-md bg-white'}>
             {arrayList.map((list,index) => (
             (select != list && list!=select1) && (
-                <Listbox.Option className={`whitespace-nowrap ${arrayList.length-1 != index && "border-b"} dark:border-white/10 pl-5 pr-10 items-center gap-2 py-1.5 flex max-md:text-xs text-sm uppercase cursor-pointer text-main-dark-gray dark:text-white/60 dark:hover:text-white hover:text-black `} key={index+list} value={index}>
+                <Listbox.Option className={`whitespace-nowrap ${arrayList.length-1 != index && "border-b"} dark:border-white/10 pl-5 pr-10 items-center gap-2 py-1.5 flex max-md:text-xs text-sm uppercase cursor-pointer text-main-dark-gray dark:text-white/80 dark:hover:text-white hover:text-black `} key={index+list} value={index}>
                     <Image width={50} height={50} className="w-5 h-5" alt="" src={`/valuta/${list}.svg`}/>
                     {(map as any)[list] != undefined? (map as any)[list] : list}
                 </Listbox.Option>
