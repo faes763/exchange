@@ -11,8 +11,8 @@ const nextConfig = {
         optimizePackageImports: ['@headlessui/react'],
     },
     env: {
-        BASE_URL: "https://dev.stuart.exchange/",
-        BASE_URL_MONITORING: "https://swag.stuart.exchange/"
+        BASE_URL: "https://stuart.exchange/v1/",
+        BASE_URL_MONITORING: "https://stuart.exchange/v2/"
     }
 }
 
